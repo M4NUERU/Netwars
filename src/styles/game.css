@@ -1,0 +1,293 @@
+/* ── GAME HEADER ── */
+.game-header {
+    height: 50px;
+    background: rgba(13, 22, 32, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--col-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 20;
+    transition: border-bottom-color var(--dur-base);
+}
+
+.header-logo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+    color: var(--col-green);
+    letter-spacing: 5px;
+    text-shadow: 0 0 10px #00e87a44;
+}
+
+.header-info {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--col-text-muted);
+    letter-spacing: 1px;
+}
+
+.header-info strong {
+    color: var(--col-text);
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.action-pip {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all var(--dur-base);
+}
+
+.action-pip.active {
+    background: var(--col-green);
+    box-shadow: 0 0 8px var(--col-green);
+    transform: scale(1);
+    opacity: 1;
+}
+
+.action-pip.used {
+    background: var(--col-border);
+    transform: scale(0.6);
+    opacity: 0.3;
+}
+
+.action-pip.consume-anim {
+    animation: pipConsume 0.5s ease-out forwards;
+}
+
+/* ── GAME BODY ── */
+.game-body {
+    display: flex;
+    height: calc(100vh - 50px);
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+}
+
+/* ── BOARD ── */
+.board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.board-row {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* ── PLAYER ZONE ── */
+.zone {
+    flex: 1;
+    background: rgba(13, 22, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1.5px solid var(--col-border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color var(--dur-base), box-shadow var(--dur-base), transform var(--dur-fast);
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.zone.current {
+    border-color: var(--zc);
+    animation: breatheGlow 4s infinite ease-in-out;
+    background: rgba(13, 22, 32, 0.85);
+}
+
+.zone.shake {
+    animation: shakeHit 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.zone.shield {
+    animation: shieldFlash 0.6s ease-out both;
+}
+
+.zone-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.zone-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--zc);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 0 0 10px color-mix(in srgb, var(--zc) 50%, transparent);
+}
+
+.zone-streak {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--col-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.zone-streak.hot {
+    color: var(--col-amber);
+    text-shadow: 0 0 8px var(--col-amber);
+    box-shadow: inset 0 0 5px rgba(255, 170, 0, 0.2);
+}
+
+/* ── SERVICES ── */
+.services-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.svc {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+    transition: all var(--dur-base);
+}
+
+.svc.up {
+    background: #00180d;
+    border-color: #00e87a55;
+    color: var(--col-green);
+    box-shadow: 0 0 10px #00e87a11;
+}
+
+.svc.down {
+    background: #200010;
+    border-color: #ff3d5a55;
+    color: var(--col-red);
+    opacity: 0.6;
+}
+
+.svc.flash-down {
+    animation: serviceFlash 0.5s ease-out;
+}
+
+.svc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 5px currentColor;
+}
+
+.svc.up .svc-dot {
+    background: var(--col-green);
+}
+
+.svc.down .svc-dot {
+    background: var(--col-red);
+}
+
+/* ── ACTIVE TAGS ── */
+.tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 24px;
+}
+
+.tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+    animation: tagPopIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.tag.infra {
+    background: rgba(0, 16, 42, 0.8);
+    border-color: #4dabff44;
+    color: var(--col-blue);
+    box-shadow: 0 0 8px #4dabff22;
+}
+
+.tag.defense {
+    background: rgba(0, 16, 8, 0.8);
+    border-color: #00e87a44;
+    color: var(--col-green);
+    box-shadow: 0 0 8px #00e87a22;
+}
+
+/* ── ISP NODE ── */
+.isp-node {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    align-self: center;
+    background: rgba(10, 20, 32, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--col-border);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    gap: 4px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(77, 171, 255, 0.1);
+    position: relative;
+    animation: pulseGlow 4s infinite alternate;
+}
+
+.isp-node::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border: 1px dashed var(--col-border);
+    border-radius: 50%;
+    animation: spin 30s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.isp-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--col-text-muted);
+}

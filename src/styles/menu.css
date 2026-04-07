@@ -1,0 +1,197 @@
+/* ── MENU ── */
+.menu-wrap {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: radial-gradient(ellipse at 50% 40%, #00e87a11 0%, transparent 70%);
+    position: relative;
+    z-index: 10;
+}
+
+.menu-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 64px;
+    color: var(--col-green);
+    letter-spacing: 12px;
+    text-shadow: 0 0 40px #00e87a55, 0 0 10px #00e87a;
+    line-height: 1;
+    position: relative;
+    animation: letterReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Glitch effect on hover */
+.menu-title:hover {
+    animation: glitch1 0.4s infinite linear alternate-reverse;
+}
+
+.menu-title:hover::before {
+    content: "⚔ NETWARS";
+    position: absolute;
+    left: 2px;
+    text-shadow: -2px 0 var(--col-red);
+    clip-path: inset(0 0 0 0);
+    animation: glitch2 0.3s infinite linear alternate-reverse;
+}
+
+.menu-title:hover::after {
+    content: "⚔ NETWARS";
+    position: absolute;
+    left: -2px;
+    text-shadow: -2px 0 var(--col-blue);
+    clip-path: inset(0 0 0 0);
+    animation: glitch1 0.5s infinite linear alternate-reverse;
+}
+
+.menu-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 8px;
+    color: var(--col-blue);
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #4dabff44;
+    animation: letterReveal 1s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.menu-desc {
+    color: var(--col-text-muted);
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.8;
+    max-width: 400px;
+    animation: letterReveal 1s 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Primary Button with pulse ring */
+.btn-primary-wrap {
+    position: relative;
+    display: inline-block;
+    animation: letterReveal 1s 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.btn-primary-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid var(--col-green);
+    border-radius: 2px;
+    animation: pulseRing 2s infinite ease-out;
+    pointer-events: none;
+}
+
+.btn-primary {
+    position: relative;
+    background: #00180d;
+    border: 1.5px solid var(--col-green);
+    color: var(--col-green);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 4px;
+    padding: 14px 40px;
+    cursor: pointer;
+    transition: all var(--dur-base);
+    text-shadow: 0 0 8px var(--col-green);
+    box-shadow: inset 0 0 10px #00e87a22, 0 0 15px #00e87a22;
+}
+
+.btn-primary:hover {
+    background: #00e87a22;
+    box-shadow: inset 0 0 20px #00e87a44, 0 0 30px #00e87a44;
+    transform: scale(1.02);
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--col-border);
+    color: var(--col-text-muted);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all var(--dur-fast);
+}
+
+.btn-ghost:hover {
+    border-color: var(--col-text-muted);
+    color: var(--col-text);
+    background: #ffffff05;
+}
+
+/* ── SETUP ── */
+.setup-box {
+    background: rgba(13, 22, 32, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--col-border);
+    border-radius: 10px;
+    padding: 32px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: letterReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.setup-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--col-text-muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+.count-row {
+    display: flex;
+    gap: 12px;
+}
+
+.count-btn {
+    flex: 1;
+    height: 52px;
+    background: var(--col-bg);
+    border: 1.5px solid var(--col-border);
+    color: var(--col-text-muted);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all var(--dur-fast);
+}
+
+.count-btn:hover:not(.active) {
+    border-color: #3a5060;
+    color: var(--col-text);
+}
+
+.count-btn.active {
+    border-color: var(--col-green);
+    color: var(--col-green);
+    background: #00180d;
+    box-shadow: inset 0 0 10px #00e87a22;
+    transform: scale(1.05);
+}
+
+.name-input-wrap {
+    animation: letterReveal 0.4s both;
+}
+
+.name-input {
+    width: 100%;
+    background: rgba(8, 12, 16, 0.8);
+    border: 1.5px solid;
+    border-left-width: 4px;
+    color: var(--col-text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    padding: 12px 14px;
+    outline: none;
+    transition: all var(--dur-fast);
+}
+
+.name-input:focus {
+    background: var(--col-panel);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--border-color) 30%, transparent);
+    transform: translateX(4px);
+}

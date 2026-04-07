@@ -1,0 +1,432 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   NETWARS — ANIMATION KEYFRAMES
+   All reusable animations in one place, imported via main.jsx
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Screen Transitions ── */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeSlideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+}
+
+/* ── Card Animations ── */
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes cardPlay {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.15) rotate(2deg);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0.5) translateY(-40px);
+        opacity: 0;
+    }
+}
+
+/* ── Glow & Pulse ── */
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px var(--glow-color, #00e87a33);
+    }
+
+    50% {
+        box-shadow: 0 0 22px var(--glow-color, #00e87a66);
+    }
+}
+
+@keyframes breatheGlow {
+
+    0%,
+    100% {
+        border-color: var(--zc);
+        box-shadow: 0 0 12px color-mix(in srgb, var(--zc) 15%, transparent);
+    }
+
+    50% {
+        border-color: var(--zc);
+        box-shadow: 0 0 28px color-mix(in srgb, var(--zc) 30%, transparent);
+    }
+}
+
+@keyframes subtlePulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ── Damage & Impact ── */
+@keyframes shakeHit {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    15% {
+        transform: translateX(-6px) rotate(-0.5deg);
+    }
+
+    30% {
+        transform: translateX(5px) rotate(0.5deg);
+    }
+
+    45% {
+        transform: translateX(-4px);
+    }
+
+    60% {
+        transform: translateX(3px);
+    }
+
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+@keyframes shieldFlash {
+    0% {
+        box-shadow: inset 0 0 0 2px transparent;
+    }
+
+    30% {
+        box-shadow: inset 0 0 30px 4px #4dabff44;
+    }
+
+    100% {
+        box-shadow: inset 0 0 0 2px transparent;
+    }
+}
+
+@keyframes serviceFlash {
+    0% {
+        background: #200010;
+    }
+
+    30% {
+        background: #ff3d5a33;
+    }
+
+    100% {
+        background: #200010;
+    }
+}
+
+/* ── Toast ── */
+@keyframes toastSlideIn {
+    from {
+        transform: translateX(-50%) translateY(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastSlideOut {
+    from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes toastProgress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+/* ── Modal ── */
+@keyframes modalEnter {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ── Tooltip ── */
+@keyframes tooltipSlideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ── Tags ── */
+@keyframes tagPopIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ── Progress bar shimmer ── */
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* ── Menu title glitch ── */
+@keyframes glitch1 {
+
+    0%,
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+    }
+
+    20% {
+        clip-path: inset(20% 0 60% 0);
+        transform: translate(-3px, 1px);
+    }
+
+    40% {
+        clip-path: inset(50% 0 20% 0);
+        transform: translate(3px, -1px);
+    }
+
+    60% {
+        clip-path: inset(10% 0 70% 0);
+        transform: translate(-2px, 2px);
+    }
+
+    80% {
+        clip-path: inset(70% 0 10% 0);
+        transform: translate(2px, -2px);
+    }
+}
+
+@keyframes glitch2 {
+
+    0%,
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+    }
+
+    20% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translate(3px, -1px);
+    }
+
+    40% {
+        clip-path: inset(30% 0 40% 0);
+        transform: translate(-3px, 1px);
+    }
+
+    60% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(2px, -2px);
+    }
+
+    80% {
+        clip-path: inset(15% 0 60% 0);
+        transform: translate(-2px, 2px);
+    }
+}
+
+/* ── Scanline overlay ── */
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* ── Button pulse ring ── */
+@keyframes pulseRing {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+
+/* ── Turn banner ── */
+@keyframes turnBannerIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes turnBannerOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+/* ── Pip consume ── */
+@keyframes pipConsume {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(0.6);
+        opacity: 0.3;
+    }
+}
+
+/* ── Log entry ── */
+@keyframes logSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes logHighlight {
+    0% {
+        background: #00e87a11;
+    }
+
+    100% {
+        background: transparent;
+    }
+}
+
+/* ── Trophy ── */
+@keyframes trophyEntrance {
+    0% {
+        transform: scale(0) rotate(-30deg);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2) rotate(5deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* ── Letter reveal ── */
+@keyframes letterReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}

@@ -1,0 +1,162 @@
+/* ── RIGHT PANEL ── */
+.right-panel {
+    width: 288px;
+    border-left: 1px solid var(--col-border);
+    background: var(--col-panel);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.panel-section {
+    border-bottom: 1px solid var(--col-border);
+    padding: 12px 14px;
+    background: rgba(8, 12, 16, 0.4);
+}
+
+.panel-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--col-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ── HAND ── */
+.hand-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    perspective: 800px;
+    /* 3D context for tilt */
+}
+
+.card-mini {
+    width: 90px;
+    min-height: 110px;
+    background: var(--col-bg);
+    border: 1.5px solid;
+    border-radius: 6px;
+    padding: 8px 6px;
+    cursor: pointer;
+    transition: all var(--dur-fast) cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    transform-style: preserve-3d;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-mini.enter {
+    animation: cardEntrance 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.card-mini:hover {
+    transform: translateY(-8px) scale(1.05) rotateX(10deg);
+    z-index: 10;
+}
+
+.card-mini.play-anim {
+    animation: cardPlay 0.5s forwards;
+    pointer-events: none;
+}
+
+.card-icon {
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    transform: translateZ(10px);
+}
+
+.card-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    text-align: center;
+    line-height: 1.2;
+    font-weight: 600;
+    transform: translateZ(5px);
+}
+
+.card-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 2px 4px;
+    border-radius: 2px;
+    margin-top: auto;
+}
+
+/* ── END TURN BTN ── */
+.end-turn-btn {
+    display: block;
+    width: 100%;
+    background: #001808;
+    border: 1px solid #00e87a44;
+    border-left: none;
+    border-right: none;
+    color: var(--col-green);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all var(--dur-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.end-turn-btn:hover:not(:disabled) {
+    background: #002810;
+    text-shadow: 0 0 8px var(--col-green);
+    box-shadow: inset 0 0 10px #00e87a22;
+}
+
+.end-turn-btn.pulse {
+    animation: pulseGlow 2s infinite alternate;
+}
+
+.end-turn-btn:disabled {
+    opacity: .35;
+    cursor: default;
+    background: var(--col-bg);
+    border-color: var(--col-border);
+    color: var(--col-text-muted);
+}
+
+/* ── LOG ── */
+.log-wrap {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.log-entry {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--col-text-muted);
+    line-height: 1.5;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: rgba(13, 22, 32, 0.5);
+    border-left: 2px solid var(--col-border);
+    animation: logSlideIn 0.3s ease-out both;
+}
+
+.log-entry.fresh {
+    color: var(--col-text);
+    border-left-color: var(--col-blue);
+    animation: logSlideIn 0.3s ease-out both, logHighlight 2s ease-out forwards;
+}

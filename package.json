@@ -1,7 +1,10 @@
 {
-  "name": "temp-vite",
+  "name": "netwars",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Juego de cartas de ciberseguridad con interfaz 3D — React + Three.js",
+  "author": "M4NUERU",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

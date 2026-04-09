@@ -1,3 +1,10 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
 # Logs
 logs
 *.log
@@ -6,11 +13,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+build.log
+lint.txt
 
-node_modules
-dist
-dist-ssr
+# Environment
+.env
+.env.local
+.env.production
+.env.*.local
 *.local
+
+# Backups
+*.bak
+
+# Misc
+*.pdf
 
 # Editor directories and files
 .vscode/*

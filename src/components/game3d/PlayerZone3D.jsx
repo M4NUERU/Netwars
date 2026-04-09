@@ -1,4 +1,5 @@
-import { Text, Edges, Float, Sphere, Cylinder, Octahedron, TorusKnot, Cone, Icosahedron, Sparkles } from '@react-three/drei';
+import { useState } from 'react';
+import { Text, Edges, Float, Sphere, Cylinder, Octahedron, TorusKnot, Cone, Icosahedron, Sparkles, Billboard } from '@react-three/drei';
 import Card3D from './Card3D';
 
 const SERVICE_MODELS = [
@@ -10,6 +11,8 @@ const SERVICE_MODELS = [
 ];
 
 export default function PlayerZone3D({ player, isCurrent, position, rotation }) {
+    const [hoveredSvcIdx, setHoveredSvcIdx] = useState(null);
+
     const d = player.defenses || [];
     const hasFw = d.includes("fw1") || d.includes("fw2");
     const hasVpn = d.includes("vpn");
@@ -44,21 +47,48 @@ export default function PlayerZone3D({ player, isCurrent, position, rotation }) 
                 {/* 5 Service slots */}
                 {Array.from({ length: 5 }).map((_, i) => {
                     const geometry = SERVICE_MODELS[i] || SERVICE_MODELS[0];
+                    const svcName = player.services[i]?.name || "Desconocido";
+                    
                     return (
                         <group key={`svc-${i}`} position={[(i - 2) * 1.5, 0.3, 1.5]}>
-                            {player.services[i] ? (
+                            {hoveredSvcIdx === i && (
+                                <Billboard position={[0, 1.2, 0]} follow={true} lockX={false} lockY={false} lockZ={false}>
+                                    <group>
+                                        <mesh position={[0, 0, -0.01]}>
+                                            <boxGeometry args={[1.6, 0.6, 0.02]} />
+                                            <meshStandardMaterial color="#1a1a2e" metalness={0.8} roughness={0.2} />
+                                        </mesh>
+                                        <mesh position={[0, 0, -0.02]}>
+                                            <boxGeometry args={[1.7, 0.7, 0.01]} />
+                                            <meshBasicMaterial color={player.services[i]?.up ? "#00ffcc" : "#ff3d5a"} />
+                                        </mesh>
+                                        <Text position={[0, 0, 0.01]} fontSize={0.22} color="#ffffff" anchorX="center" anchorY="middle">
+                                            {svcName}
+                                        </Text>
+                                    </group>
+                                </Billboard>
+                            )}
+                            
+                            {player.services[i]?.up ? (
                                 <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-                                    <mesh>
+                                    <mesh
+                                        onPointerOver={(e) => { e.stopPropagation(); setHoveredSvcIdx(i); }}
+                                        onPointerOut={(e) => { e.stopPropagation(); setHoveredSvcIdx(null); }}
+                                    >
                                         {geometry}
-                                        <meshStandardMaterial color="#00ffcc" emissive="#00aa88" />
+                                        <meshStandardMaterial color={hoveredSvcIdx === i ? "#ffffff" : "#00ffcc"} emissive={hoveredSvcIdx === i ? "#00ffcc" : "#00aa88"} />
                                         <Edges color="#ffffff" />
                                     </mesh>
                                 </Float>
                             ) : (
                                 <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
-                                    <mesh position={[0, -0.2, 0]}>
+                                    <mesh 
+                                        position={[0, -0.2, 0]}
+                                        onPointerOver={(e) => { e.stopPropagation(); setHoveredSvcIdx(i); }}
+                                        onPointerOut={(e) => { e.stopPropagation(); setHoveredSvcIdx(null); }}
+                                    >
                                         {geometry}
-                                        <meshStandardMaterial color="#222" emissive="#ff0000" emissiveIntensity={0.2} wireframe />
+                                        <meshStandardMaterial color="#222" emissive="#ff0000" emissiveIntensity={hoveredSvcIdx === i ? 0.6 : 0.2} wireframe />
                                         <Sparkles count={15} scale={1.5} size={4} color="#888" speed={0.5} opacity={0.4} />
                                     </mesh>
                                 </Float>

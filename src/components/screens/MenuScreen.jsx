@@ -1,6 +1,6 @@
 import NetworkBackground from "../ui/NetworkBackground";
 
-export default function MenuScreen({ onStart }) {
+export default function MenuScreen({ onStart, onOpenRules }) {
     return (
         <>
             <NetworkBackground />
@@ -14,6 +14,11 @@ export default function MenuScreen({ onStart }) {
                 <div className="btn-primary-wrap">
                     <button className="btn-primary" onClick={onStart}>
                         INICIAR PARTIDA
+                    </button>
+                </div>
+                <div className="btn-primary-wrap" style={{ marginTop: 15 }}>
+                    <button className="btn-ghost" onClick={onOpenRules}>
+                        REGLAS / MANUAL
                     </button>
                 </div>
             </div>

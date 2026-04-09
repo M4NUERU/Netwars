@@ -193,7 +193,8 @@
     background: #200010;
     border-color: #ff3d5a55;
     color: var(--col-red);
-    opacity: 0.6;
+    opacity: 0.85;
+    animation: criticalBlink 1.5s infinite ease-in-out;
 }
 
 .svc.flash-down {

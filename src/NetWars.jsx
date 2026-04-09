@@ -15,6 +15,7 @@ import GameScene3D from "./components/game3d/GameScene3D";
 import TooltipDock from "./components/ui/TooltipDock";
 import AttackModal from "./components/ui/AttackModal";
 import Toast from "./components/ui/Toast";
+import RulesModal from "./components/ui/RulesModal";
 
 export default function NetWars() {
     const {
@@ -30,6 +31,7 @@ export default function NetWars() {
     } = useGameState();
 
     const [turnBanner, setTurnBanner] = useState(null);
+    const [rulesOpen, setRulesOpen] = useState(false);
 
     // Watch for turn changes to show banner
     useEffect(() => {
@@ -45,7 +47,8 @@ export default function NetWars() {
     if (screen === "menu") {
         return (
             <div className="nw-root">
-                <MenuScreen onStart={() => setScreen("setup")} />
+                <MenuScreen onStart={() => setScreen("setup")} onOpenRules={() => setRulesOpen(true)} />
+                <RulesModal rulesOpen={rulesOpen} onClose={() => setRulesOpen(false)} />
             </div>
         );
     }
@@ -117,6 +120,12 @@ export default function NetWars() {
                     <span style={{ color: currentPlayer.color, fontWeight: 600 }}> {currentPlayer.name.toUpperCase()}</span>
                 </span>
                 <div className="header-actions">
+                    <button 
+                        onClick={() => setRulesOpen(true)}
+                        style={{ background: 'transparent', border: '1px solid var(--col-border)', color: 'var(--col-text-muted)', cursor: 'pointer', padding: '4px 8px', borderRadius: 4, fontFamily: "'Share Tech Mono', monospace", fontSize: 11, marginRight: 15 }}
+                    >
+                        [❓ REGLAS]
+                    </button>
                     <span className="header-info" style={{ marginRight: 6 }}>ACCIONES</span>
                     {[0, 1, 2].map(i => (
                         <div
@@ -152,6 +161,7 @@ export default function NetWars() {
                 onPlayCard={playCard}
                 onCancel={() => setAttackModal(null)}
             />
+            <RulesModal rulesOpen={rulesOpen} onClose={() => setRulesOpen(false)} />
             <Toast toast={toast} />
         </div>
     );

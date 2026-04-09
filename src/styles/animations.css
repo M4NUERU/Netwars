@@ -154,6 +154,19 @@
     }
 }
 
+@keyframes criticalBlink {
+    0%, 100% {
+        background: #200010;
+        border-color: #ff3d5a55;
+        box-shadow: none;
+    }
+    50% {
+        background: #3a001a;
+        border-color: #ff3d5a;
+        box-shadow: 0 0 10px #ff3d5a44;
+    }
+}
+
 /* ── Toast ── */
 @keyframes toastSlideIn {
     from {

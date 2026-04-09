@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { buildDeck } from "../data/cardDefinitions";
 import { makePlayer, processPlayCard, processEndTurn } from "../logic/gameEngine";
+import { playClick, playError, playAttack, playBlock, playDown, playSwitch, playCardPlay, playTurnEnd } from "../logic/audio";
 
 export function useGameState() {
     const [screen, setScreen] = useState("menu");
@@ -37,12 +38,14 @@ export function useGameState() {
             round: 1, winner: null,
         });
         setLog([`▶ Partida iniciada. Turno de ${players[0].name}`]);
+        playTurnEnd();
         setScreen("game");
     }, [pCount, pNames]);
 
     // ── End turn ──
     const endTurn = useCallback(() => {
         if (!game) return;
+        playTurnEnd();
         setGame(prev => {
             const result = processEndTurn(prev);
             if (result.winner !== null) {
@@ -62,12 +65,14 @@ export function useGameState() {
     // ── Play a card ──
     const playCard = useCallback((card, targetIdx = null) => {
         if (!game || game.actionsLeft <= 0) {
+            playError();
             showToast("¡Sin acciones disponibles!", "danger");
             return;
         }
 
         // Attack without target → open modal
         if (card.type === "attack" && targetIdx === null) {
+            playClick();
             const targets = game.players
                 .map((p, i) => ({ ...p, idx: i }))
                 .filter((_, i) => i !== game.currentIdx);
@@ -78,10 +83,22 @@ export function useGameState() {
         setGame(prev => {
             const result = processPlayCard(prev, card, targetIdx);
             if (result.needsTarget) return prev;
+            
             if (result.blocked) {
+                playBlock();
                 const target = result.gameState.players[targetIdx];
                 showToast(`¡Ataque bloqueado por ${target.name}!`, "warn");
+            } else {
+                if (card.type === "attack") playAttack();
+                else playCardPlay();
+                
+                if (result.logMessage?.includes("CAÍDO!") || result.logMessage?.includes("pierden 1 servicio")) {
+                    setTimeout(playDown, 300); // Slight delay for impact
+                } else if (result.logMessage?.includes("restauró")) {
+                    setTimeout(playSwitch, 200);
+                }
             }
+            
             addLog(result.logMessage);
             return result.gameState;
         });

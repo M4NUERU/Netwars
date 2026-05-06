@@ -1,4 +1,4 @@
-import { Text, Html, Grid, Float } from '@react-three/drei';
+import { Text, Float } from '@react-three/drei';
 import PlayerZone3D from './PlayerZone3D';
 
 export default function Board3D({ game }) {
@@ -16,37 +16,45 @@ export default function Board3D({ game }) {
 
     return (
         <group>
-            {/* Grid/Table Base */}
+            {/* Sleek Dark Floor */}
             <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow position={[0, -0.5, 0]}>
-                <planeGeometry args={[40, 40]} />
-                <meshStandardMaterial color="#050510" metalness={0.9} roughness={0.5} />
+                <planeGeometry args={[100, 100]} />
+                <meshStandardMaterial 
+                    color="#09090b" 
+                    metalness={0.6} 
+                    roughness={0.4} 
+                    envMapIntensity={0.5} 
+                />
             </mesh>
-            
-            <Grid 
-                args={[40, 40]} 
-                sectionColor="#00ffcc" 
-                cellColor="#222244" 
-                position={[0, -0.49, 0]} 
-                fadeDistance={30} 
-                fadeStrength={1} 
-            />
 
-            {/* Central ISP Node */}
-            <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
-                <group position={[0, 0.5, 0]}>
+            {/* Central Server Node (formerly ISP) */}
+            <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.3}>
+                <group position={[0, 0.4, 0]}>
                     <mesh castShadow receiveShadow>
-                        <cylinderGeometry args={[1.5, 2, 0.5, 6]} />
-                        <meshStandardMaterial color="#00ffcc" emissive="#005544" />
+                        <boxGeometry args={[2, 2.5, 2]} />
+                        <meshStandardMaterial 
+                            color="#18181b" 
+                            metalness={0.8}
+                            roughness={0.2}
+                            emissive="#6366f1"
+                            emissiveIntensity={0.2}
+                        />
                     </mesh>
                     
-                    {/* Glowing Ring */}
-                    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]}>
-                        <torusGeometry args={[2.5, 0.05, 16, 100]} />
-                        <meshBasicMaterial color="#00ffcc" transparent opacity={0.6} />
+                    {/* Elegant Ambient Ring */}
+                    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
+                        <torusGeometry args={[3, 0.02, 16, 100]} />
+                        <meshBasicMaterial color="#818cf8" transparent opacity={0.3} />
+                    </mesh>
+                    
+                    {/* Inner Glowing Core */}
+                    <mesh position={[0, 0, 0]}>
+                        <boxGeometry args={[1.9, 2.6, 1.9]} />
+                        <meshBasicMaterial color="#6366f1" transparent opacity={0.1} />
                     </mesh>
 
-                    <Text position={[0, 0.3, 0]} rotation={[-Math.PI/2, 0, 0]} fontSize={0.6} color="#000">
-                        ISP
+                    <Text position={[0, 1.35, 0]} fontSize={0.4} color="#f8fafc" letterSpacing={0.1}>
+                        CORE
                     </Text>
                 </group>
             </Float>

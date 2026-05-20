@@ -1,6 +1,13 @@
 import { TYPE_COLOR, TYPE_LABEL } from "../../constants/gameConstants";
 
 export default function TooltipDock({ card }) {
+    const TYPE_DESC = {
+        infrastructure: "Se queda en tu tablero.",
+        attack: "Daña los servicios/defensas del rival.",
+        defense: "Te protege de ataques.",
+        event: "Afecta a todos al instante.",
+    };
+
     return (
         <div
             className={`tooltip-dock ${card ? "visible" : ""}`}
@@ -18,7 +25,7 @@ export default function TooltipDock({ card }) {
                             {card.name}
                         </div>
                         <div className="tooltip-type mono" style={{ color: TYPE_COLOR[card.type] + "88" }}>
-                            {TYPE_LABEL[card.type]}
+                            {TYPE_LABEL[card.type]} — {TYPE_DESC[card.type]}
                         </div>
                         <div style={{ marginTop: 8 }}>
                             <div className="tooltip-effect">{card.effect}</div>

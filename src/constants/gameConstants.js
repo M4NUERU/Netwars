@@ -1,6 +1,6 @@
 // ─── GAME CONSTANTS ───────────────────────────────────────────────────────────
 export const SERVICES = ["Web", "DNS", "Mail", "VoIP", "Base de Datos"];
-export const WIN_TURNS = 5;
+export const WIN_TURNS = 3;
 
 // ─── ZONE THEMING ─────────────────────────────────────────────────────────────
 export const ZONE_COLORS = ["#00e87a", "#ff3d5a", "#4dabff", "#ffaa00"];

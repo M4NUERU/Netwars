@@ -27,7 +27,7 @@ export default function RulesModal({ rulesOpen, onClose }) {
                             🎯 OBJETIVO
                         </h3>
                         <p style={{ color: "var(--col-text-muted)", fontSize: 13, lineHeight: 1.5 }}>
-                            Sobrevive a los ataques y mantén <strong>sus 5 servicios activos</strong> (sin caer) durante <strong>5 rondas consecutivas</strong> para ganar la partida.
+                            Sobrevive a los ataques y mantén <strong>sus 5 servicios activos</strong> (sin caer) durante <strong>3 rondas consecutivas</strong> para ganar la partida.
                         </p>
                     </section>
 
@@ -36,7 +36,8 @@ export default function RulesModal({ rulesOpen, onClose }) {
                             ⚙️ TU TURNO
                         </h3>
                         <p style={{ color: "var(--col-text-muted)", fontSize: 13, lineHeight: 1.5 }}>
-                            Cada jugador tiene <strong>3 acciones</strong> por turno. Jugar una carta cuesta 1 acción. Al finalizar el turno o agotar las acciones, pasarás el turno y tomarás 2 cartas del mazo.
+                            Cada jugador tiene <strong>2 acciones</strong> por turno. Jugar una carta cuesta 1 acción. Al finalizar el turno, pasarás el turno y robarás hasta tener un <strong>máximo de 7 cartas</strong> en mano.<br/><br/>
+                            <strong style={{ color: "var(--col-red)" }}>Reinicio de Emergencia:</strong> Si empiezas tu turno con 0 servicios activos, puedes sacrificar tus acciones para presionar el botón de Reinicio, lo que levantará 2 servicios automáticamente y te dará 1 carta extra.
                         </p>
                     </section>
 

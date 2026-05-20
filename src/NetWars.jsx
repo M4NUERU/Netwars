@@ -27,7 +27,7 @@ export default function NetWars() {
         toast,
         attackModal, setAttackModal,
         log,
-        startGame, endTurn, playCard, resetToMenu,
+        startGame, endTurn, reboot, playCard, resetToMenu,
     } = useGameState();
 
     const [turnBanner, setTurnBanner] = useState(null);
@@ -127,7 +127,7 @@ export default function NetWars() {
                         [❓ REGLAS]
                     </button>
                     <span className="header-info" style={{ marginRight: 6 }}>ACCIONES</span>
-                    {[0, 1, 2].map(i => (
+                    {[0, 1].map(i => (
                         <div
                             key={`pip-${i}`}
                             className={`action-pip ${i < game.actionsLeft ? "active" : "used"} ${i === game.actionsLeft ? "consume-anim" : ""}`}
@@ -150,6 +150,7 @@ export default function NetWars() {
                     onHoverCard={setHovered}
                     onHoverEnd={() => setHovered(null)}
                     onEndTurn={endTurn}
+                    onReboot={reboot}
                     log={log}
                 />
             </div>

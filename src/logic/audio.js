@@ -21,7 +21,7 @@ function playTone(freq, type, duration, vol = 0.1, slideFreq = null) {
 
         osc.type = type;
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        
+
         if (slideFreq) {
             osc.frequency.exponentialRampToValueAtTime(slideFreq, ctx.currentTime + duration);
         }

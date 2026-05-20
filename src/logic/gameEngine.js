@@ -109,8 +109,10 @@ export function applyEventCard(gameState, card) {
         });
         logMessage = `🌩 EVENTO: Caída ISP — todos pierden 1 servicio`;
     } else if (card.name === "Apagón Total") {
-        g.players.forEach(p => { p.defenses = []; });
-        logMessage = `⚫ EVENTO: Apagón — todas las defensas eliminadas`;
+        g.players.forEach(p => { 
+            if (p.defenses.length > 0) p.defenses.shift(); 
+        });
+        logMessage = `⚫ EVENTO: Apagón — cada jugador pierde 1 defensa`;
     } else if (card.name === "Auditoría") {
         let best = g.players[0];
         let bestN = 0;
@@ -184,8 +186,11 @@ export function processEndTurn(gameState) {
     const nextIdx = (g.currentIdx + 1) % g.players.length;
     const np = g.players[nextIdx];
 
-    // Draw 2 cards
+    // Draw 2 cards, up to max hand size of 7
+    const MAX_HAND_SIZE = 7;
     for (let i = 0; i < 2; i++) {
+        if (np.hand.length >= MAX_HAND_SIZE) break;
+        
         if (g.deck.length === 0) {
             g.deck = shuffle(g.discard);
             g.discard = [];
@@ -197,7 +202,7 @@ export function processEndTurn(gameState) {
     const logMessage = `▶ Ronda ${newRound} — turno de ${np.name}`;
 
     return {
-        gameState: { ...g, currentIdx: nextIdx, actionsLeft: 3, round: newRound },
+        gameState: { ...g, currentIdx: nextIdx, actionsLeft: 2, round: newRound },
         winner: null,
         logMessage,
     };

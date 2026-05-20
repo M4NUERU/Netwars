@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TYPE_COLOR, TYPE_LABEL, WIN_TURNS } from "../../constants/gameConstants";
 
 export default function RightPanel({
-    currentPlayer, onPlayCard, onHoverCard, onHoverEnd, onEndTurn, log,
+    currentPlayer, onPlayCard, onHoverCard, onHoverEnd, onEndTurn, onReboot, log,
 }) {
     const [legendOpen, setLegendOpen] = useState(false);
 
@@ -17,14 +17,24 @@ export default function RightPanel({
                 {/* Cards are now rendered in 3D space */}
             </div>
 
-            {/* End Turn */}
-            <button
-                className={`end-turn-btn ${currentPlayer.hand.length === 0 ? "pulse" : ""}`}
-                onClick={onEndTurn}
-                style={{ pointerEvents: 'auto' }}
-            >
-                PASAR TURNO ➔
-            </button>
+            {/* End Turn or Reboot */}
+            {currentPlayer.services.every(s => !s.up) ? (
+                <button
+                    className="end-turn-btn pulse"
+                    onClick={onReboot}
+                    style={{ pointerEvents: 'auto', background: 'var(--col-red)', borderColor: 'var(--col-red)', color: '#fff' }}
+                >
+                    REINICIO DE EMERGENCIA 🔄
+                </button>
+            ) : (
+                <button
+                    className={`end-turn-btn ${currentPlayer.hand.length === 0 ? "pulse" : ""}`}
+                    onClick={onEndTurn}
+                    style={{ pointerEvents: 'auto' }}
+                >
+                    PASAR TURNO ➔
+                </button>
+            )}
 
             {/* Legend Toggle */}
             <div className="panel-section" style={{ padding: "8px 14px", pointerEvents: 'auto' }}>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { buildDeck } from "../data/cardDefinitions";
-import { makePlayer, processPlayCard, processEndTurn } from "../logic/gameEngine";
+import { makePlayer, processPlayCard, processEndTurn, processReboot } from "../logic/gameEngine";
 import { playClick, playError, playAttack, playBlock, playDown, playSwitch, playCardPlay, playTurnEnd } from "../logic/audio";
 
 export function useGameState() {
@@ -34,7 +34,7 @@ export function useGameState() {
 
         setGame({
             players, deck, discard: [],
-            currentIdx: 0, actionsLeft: 3,
+            currentIdx: 0, actionsLeft: 2,
             round: 1, winner: null,
         });
         setLog([`▶ Partida iniciada. Turno de ${players[0].name}`]);
@@ -48,6 +48,21 @@ export function useGameState() {
         playTurnEnd();
         setGame(prev => {
             const result = processEndTurn(prev);
+            if (result.winner !== null) {
+                return { ...result.gameState, winner: result.winner };
+            }
+            if (result.logMessage) addLog(result.logMessage);
+            return result.gameState;
+        });
+        setAttackModal(null);
+    }, [game, addLog]);
+
+    // ── Emergency Reboot ──
+    const reboot = useCallback(() => {
+        if (!game) return;
+        playTurnEnd();
+        setGame(prev => {
+            const result = processReboot(prev);
             if (result.winner !== null) {
                 return { ...result.gameState, winner: result.winner };
             }
@@ -125,6 +140,7 @@ export function useGameState() {
         // Actions
         startGame,
         endTurn,
+        reboot,
         playCard,
         showToast,
         addLog,

@@ -20,7 +20,7 @@ export default function Board3D({ game }) {
             <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow position={[0, -0.5, 0]}>
                 <planeGeometry args={[100, 100]} />
                 <meshStandardMaterial 
-                    color="#09090b" 
+                    color="#030712" 
                     metalness={0.6} 
                     roughness={0.4} 
                     envMapIntensity={0.5} 
@@ -32,25 +32,26 @@ export default function Board3D({ game }) {
                 <group position={[0, 0.4, 0]}>
                     <mesh castShadow receiveShadow>
                         <boxGeometry args={[2, 2.5, 2]} />
-                        <meshStandardMaterial 
-                            color="#18181b" 
-                            metalness={0.8}
-                            roughness={0.2}
-                            emissive="#6366f1"
-                            emissiveIntensity={0.2}
+                        <meshPhysicalMaterial 
+                            color="#020617" 
+                            metalness={0.9}
+                            roughness={0.1}
+                            emissive="#06b6d4"
+                            emissiveIntensity={0.4}
+                            clearcoat={1}
                         />
                     </mesh>
                     
                     {/* Elegant Ambient Ring */}
                     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
                         <torusGeometry args={[3, 0.02, 16, 100]} />
-                        <meshBasicMaterial color="#818cf8" transparent opacity={0.3} />
+                        <meshBasicMaterial color="#22d3ee" transparent opacity={0.5} />
                     </mesh>
                     
                     {/* Inner Glowing Core */}
                     <mesh position={[0, 0, 0]}>
                         <boxGeometry args={[1.9, 2.6, 1.9]} />
-                        <meshBasicMaterial color="#6366f1" transparent opacity={0.1} />
+                        <meshBasicMaterial color="#06b6d4" transparent opacity={0.1} />
                     </mesh>
 
                     <Text position={[0, 1.35, 0]} fontSize={0.4} color="#f8fafc" letterSpacing={0.1}>

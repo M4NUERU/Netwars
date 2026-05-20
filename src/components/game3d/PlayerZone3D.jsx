@@ -3,11 +3,11 @@ import { Text, Edges, Float, Sphere, Cylinder, Octahedron, TorusKnot, Cone, Icos
 import Card3D from './Card3D';
 
 const SERVICE_MODELS = [
-    <sphereGeometry args={[0.4, 16, 16]} />,
-    <torusKnotGeometry args={[0.25, 0.08, 64, 8]} />,
-    <octahedronGeometry args={[0.4]} />,
-    <cylinderGeometry args={[0.4, 0.4, 0.8, 16]} />,
-    <coneGeometry args={[0.4, 0.8, 4]} />
+    <boxGeometry args={[0.5, 0.8, 0.5]} />, // Web (Server Rack)
+    <cylinderGeometry args={[0.3, 0.3, 0.8, 16]} />, // DNS (Cylinder Node)
+    <boxGeometry args={[0.6, 0.4, 0.6]} />, // Mail (Flat Server)
+    <cylinderGeometry args={[0.2, 0.4, 0.8, 4]} />, // VoIP (Pyramid/Prism)
+    <cylinderGeometry args={[0.4, 0.4, 0.6, 6]} /> // Database (Hexagon)
 ];
 
 export default function PlayerZone3D({ player, isCurrent, position, rotation }) {
@@ -30,8 +30,8 @@ export default function PlayerZone3D({ player, isCurrent, position, rotation }) 
             {/* Player base plate */}
             <mesh position={[0, -0.4, 3]} receiveShadow>
                 <boxGeometry args={[14, 0.2, 5]} />
-                <meshPhysicalMaterial color={isCurrent ? '#0a1526' : '#050505'} transmission={0.5} opacity={0.8} transparent roughness={0.2} />
-                <Edges color={isCurrent ? player.color : '#334455'} threshold={15} />
+                <meshPhysicalMaterial color={isCurrent ? '#030712' : '#000000'} transmission={0.9} opacity={0.9} transparent roughness={0.1} clearcoat={1} />
+                <Edges color={isCurrent ? player.color : '#1e293b'} threshold={15} />
             </mesh>
 
             {/* Player Name */}
@@ -70,28 +70,33 @@ export default function PlayerZone3D({ player, isCurrent, position, rotation }) 
                             )}
                             
                             {player.services[i]?.up ? (
-                                <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+                                <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
                                     <mesh
                                         onPointerOver={(e) => { e.stopPropagation(); setHoveredSvcIdx(i); }}
                                         onPointerOut={(e) => { e.stopPropagation(); setHoveredSvcIdx(null); }}
                                     >
                                         {geometry}
-                                        <meshStandardMaterial color={hoveredSvcIdx === i ? "#ffffff" : "#00ffcc"} emissive={hoveredSvcIdx === i ? "#00ffcc" : "#00aa88"} />
-                                        <Edges color="#ffffff" />
+                                        <meshPhysicalMaterial 
+                                            color="#0f172a" 
+                                            emissive={hoveredSvcIdx === i ? "#ffffff" : "#06b6d4"} 
+                                            emissiveIntensity={hoveredSvcIdx === i ? 0.8 : 0.4} 
+                                            metalness={0.8} 
+                                            roughness={0.2} 
+                                            clearcoat={1}
+                                        />
+                                        <Edges color="#06b6d4" />
                                     </mesh>
                                 </Float>
                             ) : (
-                                <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
-                                    <mesh 
-                                        position={[0, -0.2, 0]}
-                                        onPointerOver={(e) => { e.stopPropagation(); setHoveredSvcIdx(i); }}
-                                        onPointerOut={(e) => { e.stopPropagation(); setHoveredSvcIdx(null); }}
-                                    >
-                                        {geometry}
-                                        <meshStandardMaterial color="#222" emissive="#ff0000" emissiveIntensity={hoveredSvcIdx === i ? 0.6 : 0.2} wireframe />
-                                        <Sparkles count={15} scale={1.5} size={4} color="#888" speed={0.5} opacity={0.4} />
-                                    </mesh>
-                                </Float>
+                                <mesh 
+                                    position={[0, -0.2, 0]}
+                                    onPointerOver={(e) => { e.stopPropagation(); setHoveredSvcIdx(i); }}
+                                    onPointerOut={(e) => { e.stopPropagation(); setHoveredSvcIdx(null); }}
+                                >
+                                    {geometry}
+                                    <meshStandardMaterial color="#020617" emissive="#ef4444" emissiveIntensity={0.2} wireframe />
+                                    <Sparkles count={20} scale={1.2} size={3} color="#ef4444" speed={0.5} opacity={0.6} />
+                                </mesh>
                             )}
                         </group>
                     );

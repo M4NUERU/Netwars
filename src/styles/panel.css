@@ -9,13 +9,15 @@
     overflow: hidden;
     position: relative;
     z-index: 5;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 }
 
 .panel-section {
     border-bottom: 1px solid var(--col-border);
     padding: 12px 14px;
-    background: rgba(8, 12, 16, 0.4);
+    background: rgba(15, 23, 42, 0.2);
 }
 
 .panel-title {
@@ -150,8 +152,9 @@
     line-height: 1.5;
     padding: 6px 8px;
     border-radius: 4px;
-    background: rgba(13, 22, 32, 0.5);
+    background: rgba(15, 23, 42, 0.4);
     border-left: 2px solid var(--col-border);
+    backdrop-filter: blur(8px);
     animation: logSlideIn 0.3s ease-out both;
 }
 

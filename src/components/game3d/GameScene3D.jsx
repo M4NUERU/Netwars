@@ -11,8 +11,8 @@ export default function GameScene3D({ game, onPlayCard, onHoverCard, onHoverEnd 
     return (
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
             <Canvas shadows camera={{ position: [0, 8, 14], fov: 45 }}>
-                <color attach="background" args={['#09090b']} />
-                <fog attach="fog" args={['#09090b', 15, 35]} />
+                <color attach="background" args={['#030712']} />
+                <fog attach="fog" args={['#030712', 15, 35]} />
                 
                 <ambientLight intensity={0.6} />
                 <directionalLight 
@@ -25,8 +25,8 @@ export default function GameScene3D({ game, onPlayCard, onHoverCard, onHoverEnd 
                     position={[0, 15, 0]} 
                     angle={0.8} 
                     penumbra={1} 
-                    intensity={0.8} 
-                    color="#6366f1" 
+                    intensity={1.2} 
+                    color="#06b6d4" 
                 />
                 
                 <Environment preset="city" />

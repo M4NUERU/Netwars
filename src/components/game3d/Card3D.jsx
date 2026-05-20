@@ -47,16 +47,23 @@ export default function Card3D({ card, index, position, rotation, isHovered, onH
                 if (playable && onClick) onClick(card);
             }}
         >
-            {/* Card Body */}
+            {/* Quartz/Glass Card Body */}
             <mesh castShadow receiveShadow>
                 <boxGeometry args={[2, 3, 0.1]} />
-                <meshStandardMaterial color="#1a1a2e" metalness={0.8} roughness={0.2} />
+                <meshPhysicalMaterial 
+                    color="#060c18" 
+                    metalness={0.1} 
+                    roughness={0.05} 
+                    transmission={0.95} 
+                    thickness={0.8}
+                    clearcoat={1}
+                />
             </mesh>
 
-            {/* Glowing Border */}
-            <mesh position={[0, 0, -0.06]}>
-                <boxGeometry args={[2.1, 3.1, 0.05]} />
-                <meshBasicMaterial color={color} toneMapped={false} />
+            {/* Glowing Internal Core */}
+            <mesh position={[0, 0, 0]}>
+                <boxGeometry args={[1.9, 2.9, 0.05]} />
+                <meshStandardMaterial color={color} emissive={color} emissiveIntensity={hover ? 0.8 : 0.2} toneMapped={false} />
             </mesh>
 
             {/* Front Face Content */}
@@ -75,15 +82,14 @@ export default function Card3D({ card, index, position, rotation, isHovered, onH
                     {card.name.length > 12 ? card.name.substring(0, 11) + '...' : card.name}
                 </Text>
 
-                {/* Effect Text (Truncated) */}
-                <Text position={[-0.8, 0.4, 0.01]} fontSize={0.12} maxWidth={1.6} anchorX="left" anchorY="top" color="#ddd">
+                <Text position={[-0.8, 0.4, 0.01]} fontSize={0.12} maxWidth={1.6} anchorX="left" anchorY="top" color="#ffffff">
                     {card.effect}
                 </Text>
 
                 {/* Cyberpunk decoration lines */}
                 <mesh position={[0, -1.2, 0.01]}>
                     <planeGeometry args={[1.8, 0.05]} />
-                    <meshBasicMaterial color={color} transparent opacity={0.5} />
+                    <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
                 </mesh>
             </group>
         </a.group>

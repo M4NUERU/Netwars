@@ -86,7 +86,7 @@ export default function MonitorScreenUI({ player }) {
                                     fontWeight: 'bold',
                                     letterSpacing: 2
                                 }}>
-                                    > {def.toUpperCase()}
+                                    {"> "} {def.toUpperCase()}
                                 </div>
                             ))}
                         </div>

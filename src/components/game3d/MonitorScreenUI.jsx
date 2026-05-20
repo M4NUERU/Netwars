@@ -6,7 +6,7 @@ export default function MonitorScreenUI({ player }) {
     const d = player.defenses || [];
     
     return (
-        <Html position={[0, 0, 0.27]} transform scale={0.021}>
+        <Html position={[0, 0, 0.27]} transform scale={0.65} center>
             <div style={{
                 width: 780,
                 height: 400,

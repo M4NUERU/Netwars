@@ -8,10 +8,10 @@ export default function Board3D({ game }) {
     // If 3-4: x = -8, 8 and z = -6, 6
 
     const positions = [
-        { pos: [0, 0, 14], rot: [0, Math.PI, 0] },     // Bottom (Current Player)
-        { pos: [0, 0, -14], rot: [0, 0, 0] },          // Top
-        { pos: [-16, 0, 0], rot: [0, Math.PI/2, 0] },  // Left
-        { pos: [16, 0, 0], rot: [0, -Math.PI/2, 0] },  // Right
+        { pos: [0, 0, 10], rot: [0, Math.PI, 0] },     // Current Player (Bottom)
+        { pos: [-14, 0, -6], rot: [0, Math.PI / 8, 0] }, // Left Opponent
+        { pos: [0, 0, -10], rot: [0, 0, 0] },          // Top Opponent
+        { pos: [14, 0, -6], rot: [0, -Math.PI / 8, 0] }, // Right Opponent
     ];
 
     return (
@@ -65,10 +65,14 @@ export default function Board3D({ game }) {
                 // Determine layout mapping
                 let posRot;
                 if (game.players.length === 2) {
-                    posRot = i === game.currentIdx ? positions[0] : positions[1];
+                    posRot = i === game.currentIdx ? positions[0] : positions[2];
+                } else if (game.players.length === 3) {
+                    const mappedIdx = (i - game.currentIdx + 3) % 3;
+                    if (mappedIdx === 0) posRot = positions[0];
+                    else if (mappedIdx === 1) posRot = positions[1];
+                    else posRot = positions[3];
                 } else {
-                    // Just cycle through them but ensure current player is at [0] mapping
-                    const mappedIdx = (i - game.currentIdx + game.players.length) % game.players.length;
+                    const mappedIdx = (i - game.currentIdx + 4) % 4;
                     posRot = positions[mappedIdx];
                 }
 

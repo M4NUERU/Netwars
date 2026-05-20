@@ -8,7 +8,6 @@ import GameOverScreen from "./components/screens/GameOverScreen";
 import NetworkBackground from "./components/ui/NetworkBackground";
 
 // Game components
-import RightPanel from "./components/game/RightPanel";
 import GameScene3D from "./components/game3d/GameScene3D";
 
 // UI overlays
@@ -140,11 +139,6 @@ export default function NetWars() {
             <div className="game-body game-body-3d" style={{ position: 'relative', flex: 1, zIndex: 1 }}>
                 <GameScene3D 
                     game={game} 
-                    onPlayCard={playCard}
-                    onHoverCard={setHovered}
-                    onHoverEnd={() => setHovered(null)}
-                />
-                <RightPanel
                     currentPlayer={currentPlayer}
                     onPlayCard={playCard}
                     onHoverCard={setHovered}

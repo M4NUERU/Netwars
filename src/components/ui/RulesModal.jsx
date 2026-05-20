@@ -27,7 +27,7 @@ export default function RulesModal({ rulesOpen, onClose }) {
                             🎯 OBJETIVO
                         </h3>
                         <p style={{ color: "var(--col-text-muted)", fontSize: 13, lineHeight: 1.5 }}>
-                            Sobrevive a los ataques y mantén <strong>sus 5 servicios activos</strong> (sin caer) durante <strong>3 rondas consecutivas</strong> para ganar la partida.
+                            Sobrevive a los ataques y mantén <strong>todos tus servicios activos</strong> (sin caer) durante <strong>3 rondas consecutivas</strong> para ganar la partida.
                         </p>
                     </section>
 

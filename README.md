@@ -2,18 +2,18 @@
 
 Juego de cartas multijugador local de **ciberseguridad**, con interfaz 3D renderizada en el navegador.
 
-Cada jugador gestiona su infraestructura de red, despliega defensas y lanza ataques contra los demás. El objetivo es mantener todos tus servicios operativos durante **5 turnos consecutivos**.
+Cada jugador gestiona su infraestructura de red, despliega defensas y lanza ataques contra los demás. El objetivo es mantener todos tus servicios operativos durante **3 turnos consecutivos**.
 
 ## 🎮 Cómo jugar
 
 1. Selecciona 2-4 jugadores y asigna nombres
-2. Cada turno tienes **3 acciones** para jugar cartas de tu mano
+2. Cada turno tienes **2 acciones** para jugar cartas de tu mano
 3. Tipos de carta:
    - **Infraestructura** — Instala servidores, switches, routers
    - **Defensa** — Firewalls, IDS, cifrado para proteger tus servicios
    - **Ataque** — DDoS, Ransomware, MITM contra otros jugadores
    - **Evento** — Afectan a todos los jugadores (Caída ISP, Apagón, Auditoría)
-4. Ganas manteniendo todos tus servicios arriba por 5 rondas seguidas
+4. Ganas manteniendo todos tus servicios arriba por 3 rondas seguidas. (Límite de mano: 7 cartas).
 
 ## 🚀 Instalación
 

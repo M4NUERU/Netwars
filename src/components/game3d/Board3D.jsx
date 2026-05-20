@@ -1,5 +1,6 @@
 import { Text, Float } from '@react-three/drei';
 import PlayerZone3D from './PlayerZone3D';
+import MonitorScreenUI from './MonitorScreenUI';
 
 export default function Board3D({ game }) {
     // We arrange players around the center node.
@@ -105,62 +106,22 @@ export default function Board3D({ game }) {
                                     <meshStandardMaterial color="#020617" metalness={0.9} roughness={0.2} />
                                 </mesh>
 
-                                {/* Deep Flat Monitor Chassis */}
+                                {/* Flat Monitor Chassis */}
                                 <group position={[0, 0, 0]}>
-                                    {/* Back panel */}
-                                    <mesh position={[0, 0, -1.25]} castShadow receiveShadow>
-                                        <boxGeometry args={[17, 9, 0.2]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
-                                    </mesh>
-                                    {/* Top Bezel */}
-                                    <mesh position={[0, 4.35, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[17, 0.3, 2.5]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
-                                    </mesh>
-                                    {/* Bottom Bezel */}
-                                    <mesh position={[0, -4.35, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[17, 0.3, 2.5]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
-                                    </mesh>
-                                    {/* Left Bezel */}
-                                    <mesh position={[-8.35, 0, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[0.3, 9, 2.5]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
-                                    </mesh>
-                                    {/* Right Bezel */}
-                                    <mesh position={[8.35, 0, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[0.3, 9, 2.5]} />
+                                    {/* The Monitor Shell */}
+                                    <mesh position={[0, 0, -0.25]} castShadow receiveShadow>
+                                        <boxGeometry args={[17, 9, 0.5]} />
                                         <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
                                     </mesh>
 
                                     {/* Glass Screen Plane (Front) */}
-                                    <mesh position={[0, 0, 1.2]} receiveShadow>
-                                        <planeGeometry args={[16.4, 8.4]} />
-                                        <meshPhysicalMaterial color={p.color} metalness={0.6} roughness={0.1} transmission={0.95} opacity={0.3} transparent clearcoat={1} />
+                                    <mesh position={[0, 0, 0.05]} receiveShadow>
+                                        <planeGeometry args={[16.6, 8.6]} />
+                                        <meshPhysicalMaterial color="#000" metalness={0.9} roughness={0.1} transmission={0.2} clearcoat={1} />
                                     </mesh>
-                                    
-                                    {/* Grid / Tech overlay on screen */}
-                                    <mesh position={[0, 0, 1.18]}>
-                                        <planeGeometry args={[16.4, 8.4]} />
-                                        <meshBasicMaterial color="#06b6d4" transparent opacity={0.05} wireframe />
-                                    </mesh>
-                                    <mesh position={[0, -3.9, 1.19]}>
-                                        <planeGeometry args={[16.4, 0.8]} />
-                                        <meshBasicMaterial color="#000" transparent opacity={0.4} />
-                                    </mesh>
-                                    <Text position={[0, -3.9, 1.22]} fontSize={0.3} color={p.color}>
-                                        {`SYS.TARGET // ${p.name.toUpperCase()} // ACTIVE_CONNECTION`}
-                                    </Text>
 
-                                    {/* 3D Diorama INSIDE the monitor */}
-                                    <group position={[0, -3.5, -0.2]} scale={0.45}>
-                                        <PlayerZone3D 
-                                            player={p} 
-                                            isCurrent={false}
-                                            position={[0, 0, 0]}
-                                            rotation={[0, 0, 0]}
-                                        />
-                                    </group>
+                                    {/* 2D Flat UI Projected on Screen */}
+                                    <MonitorScreenUI player={p} />
                                 </group>
                             </group>
                         )}

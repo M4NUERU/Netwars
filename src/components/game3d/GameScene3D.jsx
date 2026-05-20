@@ -6,7 +6,7 @@ import Hand3D from './Hand3D';
 
 function CameraRig() {
     useFrame((state) => {
-        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 0.5, 6 + state.mouse.y * 0.2, 14), 0.05);
+        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 1, 20 + state.mouse.y * 1, 38), 0.05);
         state.camera.lookAt(0, 0, 0);
     });
     return null;
@@ -17,9 +17,9 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
 
     return (
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-            <Canvas shadows camera={{ position: [0, 6, 14], fov: 45 }}>
+            <Canvas shadows camera={{ position: [0, 20, 38], fov: 45 }}>
                 <color attach="background" args={['#030712']} />
-                <fog attach="fog" args={['#030712', 15, 30]} />
+                <fog attach="fog" args={['#030712', 15, 60]} />
                 
                 <ambientLight intensity={0.6} />
                 <directionalLight 
@@ -50,7 +50,7 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                 />
 
                 {/* 3D Terminal Log */}
-                <Html position={[10, 4, -2]} transform rotation={[0, -0.6, 0]}>
+                <Html position={[20, 8, 5]} transform rotation={[0, -0.4, 0]}>
                     <div style={{ width: 280, height: 350, background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(6, 182, 212, 0.3)', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                         <div style={{ padding: '8px 12px', background: 'rgba(0,0,0,0.5)', color: '#06b6d4', fontFamily: 'monospace', fontSize: 12, borderBottom: '1px solid rgba(6, 182, 212, 0.3)' }}>
                             📡 TERMINAL DE EVENTOS
@@ -66,7 +66,7 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                 </Html>
 
                 {/* 3D Action Buttons */}
-                <Html position={[7, 0, 8]} transform rotation={[-Math.PI / 4, 0, 0]}>
+                <Html position={[12, 2, 20]} transform rotation={[-Math.PI / 4, 0, 0]}>
                     <div style={{ pointerEvents: 'auto' }}>
                         {currentPlayer.services.every(s => !s.up) ? (
                             <button className="end-turn-btn pulse" onClick={onReboot} style={{ width: 220, background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', border: '1px solid #ef4444', padding: '16px 0', cursor: 'pointer', fontFamily: 'monospace', fontWeight: 'bold', fontSize: 14, backdropFilter: 'blur(8px)', borderRadius: 4 }}>

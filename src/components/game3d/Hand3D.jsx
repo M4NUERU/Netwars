@@ -15,7 +15,7 @@ export default function Hand3D({ hand, onPlayCard, onHoverCard, onHoverEnd }) {
     const startX = -totalWidth / 2;
 
     return (
-        <group position={[0, 4, 10]} rotation={[-Math.PI / 6, 0, 0]}>
+        <group position={[0, 9, 26]} rotation={[-Math.PI / 4, 0, 0]}>
             {hand.map((card, i) => {
                 const x = startX + i * spacing;
                 // Add a slight arc effect

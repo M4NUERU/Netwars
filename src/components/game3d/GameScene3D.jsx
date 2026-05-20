@@ -6,7 +6,7 @@ import Hand3D from './Hand3D';
 
 function CameraRig() {
     useFrame((state) => {
-        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 1, 20 + state.mouse.y * 1, 38), 0.05);
+        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 0.15, 20 + state.mouse.y * 0.15, 38), 0.05);
         state.camera.lookAt(0, 0, 0);
     });
     return null;

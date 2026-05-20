@@ -207,3 +207,37 @@ export function processEndTurn(gameState) {
         logMessage,
     };
 }
+
+// ─── EMERGENCY REBOOT ─────────────────────────────────────────────────────────
+// Returns { gameState, winner, logMessage }
+export function processReboot(gameState) {
+    const g = clone(gameState);
+    const cp = g.players[g.currentIdx];
+
+    // Restore up to 2 services
+    let restored = 0;
+    for (let s of cp.services) {
+        if (!s.up) {
+            s.up = true;
+            restored++;
+            if (restored >= 2) break;
+        }
+    }
+
+    // Draw 1 extra card (with max hand size limit)
+    const MAX_HAND_SIZE = 7;
+    if (cp.hand.length < MAX_HAND_SIZE) {
+        if (g.deck.length === 0) {
+            g.deck = shuffle(g.discard);
+            g.discard = [];
+        }
+        if (g.deck.length > 0) cp.hand.push(g.deck.shift());
+    }
+
+    const rebootLog = `🔄 REBOOT: ${cp.name} reinició y levantó ${restored} servicios.`;
+
+    // End turn automatically
+    const endResult = processEndTurn(g);
+    endResult.logMessage = `${rebootLog} ${endResult.logMessage}`;
+    return endResult;
+}

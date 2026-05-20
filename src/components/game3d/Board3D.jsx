@@ -16,15 +16,19 @@ export default function Board3D({ game }) {
 
     return (
         <group>
-            {/* Sleek Dark Floor */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow position={[0, -0.5, 0]}>
-                <planeGeometry args={[100, 100]} />
+            {/* Hacker Desk */}
+            <mesh receiveShadow position={[0, -1.5, 2]}>
+                <boxGeometry args={[45, 2, 28]} />
                 <meshStandardMaterial 
-                    color="#030712" 
-                    metalness={0.6} 
-                    roughness={0.4} 
-                    envMapIntensity={0.5} 
+                    color="#0f172a" 
+                    metalness={0.2} 
+                    roughness={0.8} 
                 />
+            </mesh>
+            {/* Desk Mat (Current Player) */}
+            <mesh receiveShadow position={[0, -0.49, 10]}>
+                <boxGeometry args={[18, 0.02, 10]} />
+                <meshStandardMaterial color="#020617" roughness={0.9} />
             </mesh>
 
             {/* Central Server Node (formerly ISP) */}
@@ -78,14 +82,40 @@ export default function Board3D({ game }) {
 
                 if (!posRot) return null;
 
+                const isCurrent = p.id === game.currentIdx;
+
                 return (
-                    <PlayerZone3D 
-                        key={p.id} 
-                        player={p} 
-                        isCurrent={p.id === game.currentIdx}
-                        position={posRot.pos}
-                        rotation={posRot.rot}
-                    />
+                    <group key={p.id} position={posRot.pos} rotation={posRot.rot}>
+                        {!isCurrent && (
+                            <group position={[0, 3, -2]}>
+                                {/* Monitor Stand */}
+                                <mesh position={[0, -2, -0.5]}>
+                                    <cylinderGeometry args={[0.2, 0.4, 2]} />
+                                    <meshStandardMaterial color="#020617" />
+                                </mesh>
+                                {/* Monitor Screen */}
+                                <mesh position={[0, 0, 0]} castShadow>
+                                    <boxGeometry args={[16, 8, 0.5]} />
+                                    <meshPhysicalMaterial color="#000" metalness={0.9} roughness={0.1} />
+                                </mesh>
+                                {/* Inner Glow */}
+                                <mesh position={[0, 0, 0.26]}>
+                                    <planeGeometry args={[15.6, 7.6]} />
+                                    <meshBasicMaterial color="#020617" />
+                                </mesh>
+                                <mesh position={[0, 0, 0.27]}>
+                                    <planeGeometry args={[15.6, 7.6]} />
+                                    <meshBasicMaterial color={p.color} transparent opacity={0.15} />
+                                </mesh>
+                            </group>
+                        )}
+                        <PlayerZone3D 
+                            player={p} 
+                            isCurrent={isCurrent}
+                            position={[0, 0, 0]}
+                            rotation={[0, 0, 0]}
+                        />
+                    </group>
                 );
             })}
         </group>

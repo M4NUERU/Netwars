@@ -88,59 +88,44 @@ export default function Board3D({ game }) {
                     <group key={p.id} position={posRot.pos} rotation={posRot.rot}>
                         {!isCurrent && (
                             <group position={[0, 4, -2]}>
-                                {/* Base/Foot */}
-                                <mesh position={[0, -5, -2]} castShadow receiveShadow>
-                                    <boxGeometry args={[6, 0.4, 6]} />
+                                {/* T-Shape Stand */}
+                                {/* Horizontal Base (T-foot) */}
+                                <mesh position={[0, -4.9, -1]} castShadow receiveShadow>
+                                    <boxGeometry args={[7, 0.2, 3]} />
                                     <meshStandardMaterial color="#0f172a" metalness={0.5} roughness={0.5} />
                                 </mesh>
-                                {/* Neck */}
-                                <mesh position={[0, -4.5, -2]} castShadow>
-                                    <cylinderGeometry args={[0.6, 1.2, 1.4]} />
+                                {/* Vertical Neck */}
+                                <mesh position={[0, -2.5, -1]} castShadow>
+                                    <boxGeometry args={[1, 5, 0.4]} />
                                     <meshStandardMaterial color="#020617" metalness={0.8} roughness={0.2} />
                                 </mesh>
 
-                                {/* CRT Hollow Box (Chassis) */}
-                                <group position={[0, 0, -4]}>
-                                    {/* Bottom Wall */}
-                                    <mesh position={[0, -4.25, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[17, 0.5, 8]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.5} roughness={0.6} />
-                                    </mesh>
-                                    {/* Top Wall */}
-                                    <mesh position={[0, 4.25, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[17, 0.5, 8]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.5} roughness={0.6} />
-                                    </mesh>
-                                    {/* Left Wall */}
-                                    <mesh position={[-8.25, 0, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[0.5, 8, 8]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.5} roughness={0.6} />
-                                    </mesh>
-                                    {/* Right Wall */}
-                                    <mesh position={[8.25, 0, 0]} castShadow receiveShadow>
-                                        <boxGeometry args={[0.5, 8, 8]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.5} roughness={0.6} />
-                                    </mesh>
-                                    {/* Back Wall */}
-                                    <mesh position={[0, 0, -3.75]} castShadow receiveShadow>
-                                        <boxGeometry args={[16, 8, 0.5]} />
-                                        <meshStandardMaterial color="#020617" metalness={0.5} roughness={0.6} />
+                                {/* Flat Monitor Chassis */}
+                                <group position={[0, 0, 0]}>
+                                    {/* The Monitor Shell */}
+                                    <mesh position={[0, 0, -0.25]} castShadow receiveShadow>
+                                        <boxGeometry args={[17, 9, 0.5]} />
+                                        <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
                                     </mesh>
 
                                     {/* Glass Screen Plane (Front) */}
-                                    <mesh position={[0, 0, 3.9]} receiveShadow>
-                                        <planeGeometry args={[16, 8]} />
-                                        <meshPhysicalMaterial color="#06b6d4" metalness={0.9} roughness={0.05} transmission={0.9} clearcoat={1} opacity={0.2} transparent />
+                                    <mesh position={[0, 0, 0.05]} receiveShadow>
+                                        <planeGeometry args={[16.6, 8.6]} />
+                                        <meshPhysicalMaterial color="#000" metalness={0.9} roughness={0.1} transmission={0.2} clearcoat={1} />
                                     </mesh>
 
-                                    {/* Inner Ambient Glow */}
-                                    <mesh position={[0, 0, -3.4]}>
-                                        <planeGeometry args={[15, 7.5]} />
+                                    {/* Inner Ambient Glow on screen */}
+                                    <mesh position={[0, 0, 0.02]}>
+                                        <planeGeometry args={[16.6, 8.6]} />
+                                        <meshBasicMaterial color="#020617" />
+                                    </mesh>
+                                    <mesh position={[0, 0, 0.03]}>
+                                        <planeGeometry args={[16.6, 8.6]} />
                                         <meshBasicMaterial color={p.color} transparent opacity={0.15} />
                                     </mesh>
 
-                                    {/* The PlayerZone3D acting as a Diorama INSIDE the CRT */}
-                                    <group position={[0, -3.6, -3]}>
+                                    {/* 3D Diorama Projecting from the flat screen */}
+                                    <group position={[0, -3.5, 0.1]} scale={0.45}>
                                         <PlayerZone3D 
                                             player={p} 
                                             isCurrent={false}

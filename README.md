@@ -9,7 +9,7 @@ Cada jugador gestiona su propia infraestructura de red, despliega gateways y fir
 ## 🎮 Modos de Juego
 
 1. **Partida Local (PVP):** Juega en la misma computadora por turnos pasando el control.
-2. **Multijugador Online (Real-Time):** Crea una sala virtual en la nube (recibiendo un código de acceso único de 4 letras) y permite que otros jugadores se conecten desde sus propios dispositivos (móviles, laptops, tablets) compartiendo la partida en tiempo real.
+2. **Multijugador Online (Real-Time):** Crea una sala virtual en la nube (recibiendo un código de acceso único de 4 letras) y permite que otros jugadores se conecten desde sus propios dispositivos (móviles, laptops, tablets) compartiendo la partida en tiempo real. ¡Funciona de forma automática en Vercel sin configuraciones complejas!
 
 ---
 
@@ -26,12 +26,16 @@ Cada jugador gestiona su propia infraestructura de red, despliega gateways y fir
 
 ---
 
-## 🚀 Características Premium
+## 🚀 Características Premium e Interactivas
 
 * **Tablero 3D Interactivo:** Cartas tridimensionales animadas con físicas, rotaciones por gravedad y efectos de flotabilidad en la mesa.
-* **Consolas de Monitoreo Cyberpunk (HUD):** Monitores virtuales tácticos para oponentes que proyectan en 3D un canvas de integridad de red, servicios activos y defensas perimetrales en tiempo real.
-* **Audio Sintetizado Retro-Cyberpunk (Nativo):** Efectos de sonido generados a través de la Web Audio API (beeps de click, alarmas de caída de servicios, ruidos de barrido en ataques y arpegios de restauración) sin consumo de ancho de banda.
-* **Lobbies Online Sincronizados:** Sincronización en la nube con Supabase Realtime a través de WebSockets en milisegundos.
+* **Escritorio de Caoba:** El campo de batalla se asienta sobre un elegante escritorio con textura procedural de madera de caoba de alta resolución generada mediante código.
+* **Teclado Mecánico RGB + CORE.SYS:** Reemplazando el viejo nodo central, el tablero cuenta con un teclado mecánico tridimensional hiperrealista con base emisora RGB de neón cian, teclas individuales coloreadas bajo la temática del juego, y un holograma flotante del procesador cuántico `CORE.SYS` orbitando en la mesa.
+* **Consolas de Monitoreo HUD Cyberpunk:** Monitores virtuales tácticos para los oponentes que proyectan en 3D un canvas de integridad de red, servicios activos y defensas perimetrales en tiempo real.
+* **Cámara de Zoom Cinemático:** ¡Haz clic en el monitor de cualquier oponente para volar la cámara en una suave transición de zoom! Te permite inspeccionar al detalle las capas de red y defensas enemigas. Pulsa la interfaz flotante o el monitor de nuevo para regresar al tablero aéreo.
+* **Fondo "Hacker's Den" 3D:** El escenario se asienta en la habitación de un hacker, rodeada por luces LED de neón verticales (Cian, Rosa, Naranja y Verde) y una pantalla holográfica gigante que despliega un flujo de datos binarios y logs del sistema en la distancia.
+* **Audio Sintetizado Retro-Cyberpunk (Nativo):** Efectos de sonido generados a través de la Web Audio API (alarmas de caída de servicios, ruidos de barrido en ataques y arpegios de restauración) sin consumo de archivos pesados.
+* **Lobbies Online Sincronizados (Zero-Config):** Sincronización en la nube con Supabase Realtime a través de WebSockets en milisegundos. ¡Incluye credenciales fallback integradas para despliegue inmediato en Vercel!
 
 ---
 
@@ -45,12 +49,7 @@ cd Netwars
 # 2. Instalar dependencias (incluyendo el SDK de Supabase)
 npm install
 
-# 3. Configurar variables de entorno
-# Crea un archivo .env en la raíz del proyecto y añade tus claves de Supabase:
-# VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
-# VITE_SUPABASE_ANON_KEY=tu-anon-key-de-supabase
-
-# 4. Iniciar servidor de desarrollo local
+# 3. Iniciar servidor de desarrollo local
 npm run dev
 ```
 

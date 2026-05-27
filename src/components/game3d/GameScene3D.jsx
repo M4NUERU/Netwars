@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, Html } from '@react-three/drei';
+import { Environment, Html, Text } from '@react-three/drei';
 import * as THREE from 'three';
 import Board3D from './Board3D';
 import Hand3D from './Hand3D';
@@ -29,26 +29,61 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                 }}
                 dpr={[1, 2]}
             >
-                <color attach="background" args={['#030712']} />
+                <color attach="background" args={['#020408']} />
                 
-                <ambientLight intensity={0.6} />
+                <ambientLight intensity={0.5} />
                 <directionalLight 
-                    position={[5, 10, 5]} 
-                    intensity={1.2} 
+                    position={[8, 12, 8]} 
+                    intensity={1.0} 
                     castShadow 
                     shadow-mapSize={[1024, 1024]} 
                 />
                 <spotLight 
-                    position={[0, 15, 0]} 
-                    angle={0.8} 
+                    position={[0, 16, 2]} 
+                    angle={0.9} 
                     penumbra={1} 
-                    intensity={1.2} 
-                    color="#06b6d4" 
+                    intensity={1.5} 
+                    color="#00ffcc" 
                 />
                 
                 <Environment preset="city" />
 
                 <CameraRig />
+
+                {/* --- Hacker's Cyber Room Background Scene --- */}
+                <group position={[0, -2, -26]}>
+                    {/* Vertical Cyan, Pink, Orange and Green LED Tube Lights */}
+                    {[-18, -6, 6, 18].map((x, idx) => {
+                        const tubeColors = ['#00ffff', '#ff007f', '#ffaa00', '#00ff66'];
+                        return (
+                            <group key={`room-led-${idx}`} position={[x, 5, 0]}>
+                                {/* LED outer neon glow tube */}
+                                <mesh>
+                                    <cylinderGeometry args={[0.12, 0.12, 16, 8]} />
+                                    <meshBasicMaterial color={tubeColors[idx]} transparent opacity={0.25} />
+                                </mesh>
+                                {/* LED inner core tube */}
+                                <mesh>
+                                    <cylinderGeometry args={[0.04, 0.04, 16, 8]} />
+                                    <meshBasicMaterial color="#ffffff" />
+                                </mesh>
+                            </group>
+                        );
+                    })}
+
+                    {/* Futuristic holographic matrix terminal text floating behind desk */}
+                    <Text 
+                        position={[0, 7.5, -2]} 
+                        fontSize={0.42} 
+                        color="#06b6d4" 
+                        maxWidth={30} 
+                        textAlign="center" 
+                        font="monospace" 
+                        fillOpacity={0.12}
+                    >
+                        {`01001001 01001110 01010100 01010010 01010101 01010011 01001001 01001111 01001110\nNETWARS.SYS // TERMINAL_ACTIVE // ENCRYPTING_VPN_NODE... // KEY_PASSED\n[########################################] 100% SECURE\nPORT_80: LISTEN // PORT_443: SECURE // PORT_22: ACTIVE_ESTABLISHED`}
+                    </Text>
+                </group>
 
                 <Board3D game={game} />
                 

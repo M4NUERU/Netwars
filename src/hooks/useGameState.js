@@ -68,6 +68,10 @@ export function useGameState() {
 
     // ── Create Online Game (Supabase) ──
     const createOnlineGame = useCallback(async (hostName) => {
+        if (!supabase) {
+            showToast("El servidor online no está configurado en Vercel.", "danger");
+            return;
+        }
         setIsConnecting(true);
         try {
             const code = generateRoomCode();
@@ -113,6 +117,10 @@ export function useGameState() {
 
     // ── Join Online Game (Supabase) ──
     const joinOnlineGame = useCallback(async (code, playerName) => {
+        if (!supabase) {
+            showToast("El servidor online no está configurado en Vercel.", "danger");
+            return;
+        }
         if (!code) {
             showToast("Por favor ingresa un código de sala.", "warn");
             return;
@@ -175,7 +183,7 @@ export function useGameState() {
 
     // ── Push updated state to Supabase ──
     const pushGameState = useCallback(async (nextGame, nextLog) => {
-        if (!lobbyCode) return;
+        if (!lobbyCode || !supabase) return;
         try {
             await supabase
                 .from('netwars_lobbies')
@@ -290,7 +298,7 @@ export function useGameState() {
 
     // ── Subscribe to Online Realtime Updates ──
     useEffect(() => {
-        if (!lobbyCode) return;
+        if (!lobbyCode || !supabase) return;
 
         const channel = supabase
             .channel(`lobby:${lobbyCode}`)

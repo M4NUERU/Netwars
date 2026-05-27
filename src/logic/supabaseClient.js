@@ -3,8 +3,16 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn("Supabase credentials not configured in environment variables (.env file). Online multiplayer will be disabled.");
+let supabaseInstance = null;
+
+if (supabaseUrl && supabaseAnonKey) {
+    try {
+        supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    } catch (e) {
+        console.error("Failed to initialize Supabase client:", e);
+    }
+} else {
+    console.warn("Supabase credentials not configured. Online multiplayer is disabled.");
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = supabaseInstance;

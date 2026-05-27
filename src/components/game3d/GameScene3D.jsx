@@ -6,9 +6,9 @@ import Board3D from './Board3D';
 import Hand3D from './Hand3D';
 
 const ZOOM_TARGETS = {
-    left: { pos: [-8, 6, -2], look: [-14, 3.5, -8] },
-    top: { pos: [0, 5, -4], look: [0, 3.5, -12] },
-    right: { pos: [8, 6, -2], look: [14, 3.5, -8] }
+    left: { pos: [-7, 6, 0], look: [-14, 3.5, -8] },
+    top: { pos: [0, 6, -2], look: [0, 3.5, -12] },
+    right: { pos: [7, 6, 0], look: [14, 3.5, -8] }
 };
 
 function CameraRig({ slot }) {

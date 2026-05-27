@@ -12,7 +12,7 @@ if (supabaseUrl && supabaseAnonKey) {
         console.error("Failed to initialize Supabase client:", e);
     }
 } else {
-    console.warn("Supabase credentials not configured. Online multiplayer is disabled.");
+    console.info("Supabase credentials not configured. Online multiplayer is disabled (Running in local PVP mode).");
 }
 
 export const supabase = supabaseInstance;

@@ -22,6 +22,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .nw-root {
@@ -36,8 +44,42 @@
   position: relative;
   /* Smooth fade in transition */
   animation: fadeSlideIn var(--dur-slow) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Hardware acceleration for better rendering */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .mono {
   font-family: 'Outfit', sans-serif; /* Replaced mono with a sleek geometric sans */
+}
+
+/* Mejoras para renderizado 3D y HTML embebido */
+.html-3d-content {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.monitor-screen {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  /* Mejora específica para bordes */
+  outline: none;
+  border-style: solid;
+  /* Mejoras específicas para texto nítido */
+  font-feature-settings: "liga" 0;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }

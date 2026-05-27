@@ -114,14 +114,14 @@ export default function Board3D({ game }) {
                                         <meshStandardMaterial color="#020617" metalness={0.6} roughness={0.4} />
                                     </mesh>
 
+                                    {/* 2D Flat UI Projected on Screen */}
+                                    <MonitorScreenUI player={p} />
+
                                     {/* Glass Screen Plane (Front) */}
                                     <mesh position={[0, 0, 0.05]} receiveShadow>
                                         <planeGeometry args={[16.6, 8.6]} />
                                         <meshPhysicalMaterial color="#000" metalness={0.9} roughness={0.1} transmission={0.2} clearcoat={1} />
                                     </mesh>
-
-                                    {/* 2D Flat UI Projected on Screen */}
-                                    <MonitorScreenUI player={p} />
                                 </group>
                             </group>
                         )}

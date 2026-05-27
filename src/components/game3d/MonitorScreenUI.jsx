@@ -1,108 +1,132 @@
-import { Html } from '@react-three/drei';
+import { useRef, useEffect, useMemo } from 'react';
+import * as THREE from 'three';
 
 export default function MonitorScreenUI({ player }) {
+    const meshRef = useRef();
+    const canvasRef = useRef();
+    const textureRef = useRef();
+
+    // Create canvas texture
+    const texture = useMemo(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024;
+        canvas.height = 512;
+        canvasRef.current = canvas;
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.flipY = false;
+        textureRef.current = texture;
+        
+        return texture;
+    }, []);
+
+    // Draw content to canvas
+    useEffect(() => {
+        if (!player || !canvasRef.current) return;
+
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        
+        // Clear canvas with a visible background for testing
+        ctx.fillStyle = '#050a14';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Border
+        ctx.strokeStyle = player.color || '#00ff00';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+        
+        // Test text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 24px monospace';
+        ctx.textBaseline = 'top';
+        ctx.fillText(`SYS.TARGET // ${player.name.toUpperCase()}`, 30, 30);
+        
+        ctx.fillStyle = '#06b6d4';
+        ctx.font = 'bold 20px monospace';
+        ctx.fillText('STATUS: ONLINE', canvas.width - 30, 30);
+        
+        // Services section
+        ctx.fillStyle = '#888';
+        ctx.font = 'bold 18px monospace';
+        ctx.fillText('[ NETWORK SERVICES ]', 30, 80);
+        
+        if (player.services && Array.isArray(player.services)) {
+            player.services.forEach((svc, i) => {
+                const y = 120 + i * 40;
+                
+                // Service box
+                ctx.fillStyle = svc.up ? 'rgba(6, 182, 212, 0.2)' : 'rgba(239, 68, 68, 0.2)';
+                ctx.fillRect(30, y, canvas.width - 60, 30);
+                ctx.strokeStyle = svc.up ? '#06b6d4' : '#ef4444';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(30, y, canvas.width - 60, 30);
+                
+                // Service name
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 16px monospace';
+                ctx.fillText(svc.name, 45, y + 8);
+                
+                // Service status
+                ctx.fillStyle = svc.up ? '#00ffcc' : '#ff3d5a';
+                ctx.font = 'bold 16px monospace';
+                ctx.fillText(svc.up ? 'UP' : 'DOWN', canvas.width - 45, y + 8);
+            });
+        }
+        
+        // Defenses section
+        ctx.fillStyle = '#888';
+        ctx.font = 'bold 18px monospace';
+        ctx.fillText('[ ACTIVE DEFENSES ]', 30, 350);
+        
+        const defenses = player.defenses || [];
+        if (defenses.length === 0) {
+            ctx.fillStyle = '#555';
+            ctx.font = 'italic 14px monospace';
+            ctx.fillText('No active defenses detected.', 30, 390);
+        } else {
+            defenses.forEach((def, i) => {
+                const y = 390 + i * 25;
+                
+                // Defense background
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.15)';
+                ctx.fillRect(30, y, canvas.width - 60, 20);
+                
+                // Defense left border
+                ctx.fillStyle = '#f59e0b';
+                ctx.fillRect(30, y, 3, 20);
+                
+                // Defense text
+                ctx.fillStyle = '#f59e0b';
+                ctx.font = 'bold 14px monospace';
+                ctx.fillText(`> ${def.toUpperCase()}`, 40, y + 4);
+            });
+        }
+        
+        // Scanline effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+        for (let i = 0; i < canvas.height; i += 3) {
+            ctx.fillRect(0, i, canvas.width, 1);
+        }
+        
+        // Update texture
+        if (textureRef.current) {
+            textureRef.current.needsUpdate = true;
+        }
+    }, [player]);
+
     if (!player) return null;
 
-    const d = player.defenses || [];
-    
     return (
-        <Html position={[0, 0, 0.27]} transform scale={0.325} center>
-            <div style={{
-                width: 1560,
-                height: 800,
-                background: 'rgba(5, 10, 20, 0.95)',
-                border: `4px solid ${player.color}`,
-                boxShadow: `0 0 60px ${player.color}40 inset`,
-                borderRadius: 16,
-                padding: 48,
-                fontFamily: "'Share Tech Mono', monospace",
-                color: '#fff',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative',
-                overflow: 'hidden'
-            }}>
-                {/* Header */}
-                <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    borderBottom: `4px solid ${player.color}60`,
-                    paddingBottom: 24,
-                    marginBottom: 48
-                }}>
-                    <div style={{ fontSize: 56, color: player.color, fontWeight: 'bold', textShadow: `0 0 20px ${player.color}` }}>
-                        SYS.TARGET // {player.name.toUpperCase()}
-                    </div>
-                    <div style={{ fontSize: 48, color: '#06b6d4', opacity: 0.9 }}>
-                        STATUS: ONLINE
-                    </div>
-                </div>
-
-                {/* Body */}
-                <div style={{ display: 'flex', gap: 60, flex: 1 }}>
-                    {/* Services Column */}
-                    <div style={{ flex: 2, display: 'flex', flexDirection: 'column', gap: 30 }}>
-                        <div style={{ color: '#888', fontSize: 36, marginBottom: 10 }}>[ NETWORK SERVICES ]</div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 30 }}>
-                            {player.services.map((svc, i) => (
-                                <div key={i} style={{
-                                    background: svc.up ? 'rgba(6, 182, 212, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                                    border: `2px solid ${svc.up ? '#06b6d4' : '#ef4444'}`,
-                                    padding: '32px 40px',
-                                    borderRadius: 12,
-                                    width: 'calc(50% - 15px)',
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center'
-                                }}>
-                                    <span style={{ fontSize: 40, color: '#fff' }}>{svc.name}</span>
-                                    <span style={{ 
-                                        color: svc.up ? '#00ffcc' : '#ff3d5a', 
-                                        fontWeight: 'bold',
-                                        fontSize: 44,
-                                        textShadow: `0 0 24px ${svc.up ? '#00ffcc' : '#ff3d5a'}`
-                                    }}>
-                                        {svc.up ? 'UP' : 'DOWN'}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Defenses Column */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 30 }}>
-                        <div style={{ color: '#888', fontSize: 36, marginBottom: 10 }}>[ ACTIVE DEFENSES ]</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                            {d.length === 0 && (
-                                <div style={{ color: '#555', fontStyle: 'italic', padding: 20, fontSize: 36 }}>No active defenses detected.</div>
-                            )}
-                            {d.map((def, i) => (
-                                <div key={i} style={{
-                                    background: 'rgba(245, 158, 11, 0.1)',
-                                    borderLeft: '8px solid #f59e0b',
-                                    padding: '20px 32px',
-                                    color: '#f59e0b',
-                                    fontSize: 36,
-                                    fontWeight: 'bold',
-                                    letterSpacing: 4
-                                }}>
-                                    {"> "} {def.toUpperCase()}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Scanline overlay effect */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))',
-                    backgroundSize: '100% 8px, 6px 100%',
-                    pointerEvents: 'none',
-                    opacity: 0.5
-                }} />
-            </div>
-        </Html>
+        <mesh position={[0, 0, 0.06]} rotation={[0, 0, 0]}>
+            <planeGeometry args={[16.5, 8.5]} />
+            <meshBasicMaterial 
+                map={texture} 
+                transparent={false}
+                side={THREE.DoubleSide}
+            />
+        </mesh>
     );
 }

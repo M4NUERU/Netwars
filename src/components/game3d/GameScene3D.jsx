@@ -17,7 +17,18 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
 
     return (
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-            <Canvas shadows camera={{ position: [0, 20, 38], fov: 45 }}>
+            <Canvas 
+                shadows 
+                camera={{ position: [0, 20, 38], fov: 45 }}
+                gl={{ 
+                    antialias: true,
+                    alpha: true,
+                    powerPreference: "high-performance",
+                    stencil: false,
+                    depth: true
+                }}
+                dpr={[1, 2]}
+            >
                 <color attach="background" args={['#030712']} />
                 
                 <ambientLight intensity={0.6} />
@@ -50,7 +61,7 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
 
                 {/* 3D Terminal Log */}
                 <Html position={[20, 8, 5]} transform rotation={[0, -0.4, 0]}>
-                    <div style={{ width: 280, height: 350, background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(6, 182, 212, 0.3)', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                    <div className="html-3d-content" style={{ width: 280, height: 350, background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(6, 182, 212, 0.3)', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                         <div style={{ padding: '8px 12px', background: 'rgba(0,0,0,0.5)', color: '#06b6d4', fontFamily: 'monospace', fontSize: 12, borderBottom: '1px solid rgba(6, 182, 212, 0.3)' }}>
                             📡 TERMINAL DE EVENTOS
                         </div>
@@ -66,7 +77,7 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
 
                 {/* 3D Action Buttons */}
                 <Html position={[12, 2, 20]} transform rotation={[-Math.PI / 4, 0, 0]}>
-                    <div style={{ pointerEvents: 'auto' }}>
+                    <div className="html-3d-content" style={{ pointerEvents: 'auto' }}>
                         {currentPlayer.services.every(s => !s.up) ? (
                             <button className="end-turn-btn pulse" onClick={onReboot} style={{ width: 220, background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', border: '1px solid #ef4444', padding: '16px 0', cursor: 'pointer', fontFamily: 'monospace', fontWeight: 'bold', fontSize: 14, backdropFilter: 'blur(8px)', borderRadius: 4 }}>
                                 🔄 REINICIO EMERGENCIA

@@ -26,7 +26,8 @@ export default function NetWars() {
         toast,
         attackModal, setAttackModal,
         log,
-        startGame, endTurn, reboot, playCard, resetToMenu,
+        lobbyCode, myPlayerId, isConnecting,
+        startGame, createOnlineGame, joinOnlineGame, endTurn, reboot, playCard, resetToMenu,
     } = useGameState();
 
     const [turnBanner, setTurnBanner] = useState(null);
@@ -46,7 +47,13 @@ export default function NetWars() {
     if (screen === "menu") {
         return (
             <div className="nw-root">
-                <MenuScreen onStart={() => setScreen("setup")} onOpenRules={() => setRulesOpen(true)} />
+                <MenuScreen 
+                    onStart={() => setScreen("setup")} 
+                    onOpenRules={() => setRulesOpen(true)} 
+                    onCreateOnline={createOnlineGame}
+                    onJoinOnline={joinOnlineGame}
+                    isConnecting={isConnecting}
+                />
                 <RulesModal rulesOpen={rulesOpen} onClose={() => setRulesOpen(false)} />
             </div>
         );
@@ -113,7 +120,9 @@ export default function NetWars() {
 
             {/* Header */}
             <div className="game-header" style={{ borderBottomColor: currentPlayer.color }}>
-                <span className="header-logo">⚔ NETWARS</span>
+                <span className="header-logo">
+                    ⚔ NETWARS {lobbyCode && <span style={{ color: '#06b6d4', fontSize: 13, marginLeft: 10, letterSpacing: 1 }}>// SALA: <strong style={{ color: '#00ffcc' }}>{lobbyCode}</strong> {myPlayerId !== null && `(JUGADOR ${myPlayerId + 1})`}</span>}
+                </span>
                 <span className="header-info">
                     RONDA <strong>{game.round}</strong> &nbsp;|&nbsp;
                     <span style={{ color: currentPlayer.color, fontWeight: 600 }}> {currentPlayer.name.toUpperCase()}</span>

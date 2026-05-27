@@ -1,78 +1,103 @@
-#  NetWars
+# ⚔ NetWars
 
-Juego de cartas multijugador local de **ciberseguridad**, con interfaz 3D renderizada en el navegador.
+Juego de cartas estratégico de **ciberseguridad**, con un espectacular tablero 3D interactivo en el navegador y sincronización multijugador online en tiempo real.
 
-Cada jugador gestiona su infraestructura de red, despliega defensas y lanza ataques contra los demás. El objetivo es mantener todos tus servicios operativos durante **3 turnos consecutivos**.
+Cada jugador gestiona su propia infraestructura de red, despliega gateways y firewalls de defensa, y lanza ataques ofensivos avanzados contra sus rivales. El objetivo es mantener todos tus servicios críticos operativos durante **3 turnos consecutivos**.
 
-##  Cómo jugar
+---
 
-1. Selecciona 2-4 jugadores y asigna nombres
-2. Cada turno tienes **2 acciones** para jugar cartas de tu mano
+## 🎮 Modos de Juego
+
+1. **Partida Local (PVP):** Juega en la misma computadora por turnos pasando el control.
+2. **Multijugador Online (Real-Time):** Crea una sala virtual en la nube (recibiendo un código de acceso único de 4 letras) y permite que otros jugadores se conecten desde sus propios dispositivos (móviles, laptops, tablets) compartiendo la partida en tiempo real.
+
+---
+
+## ⚔ Cómo jugar
+
+1. Elige tu alias de combate e ingresa al campo.
+2. Cada turno dispones de **2 acciones** para jugar cartas de tu mano.
 3. Tipos de carta:
-   - **Infraestructura** — Instala servidores, switches, routers
-   - **Defensa** — Firewalls, IDS, cifrado para proteger tus servicios
-   - **Ataque** — DDoS, Ransomware, MITM contra otros jugadores
-   - **Evento** — Afectan a todos los jugadores (Caída ISP, Apagón, Auditoría)
-4. Ganas manteniendo todos tus servicios arriba por 3 rondas seguidas. (Límite de mano: 7 cartas).
+   - **Infraestructura (Cian):** Instala servidores, switches, routers para restaurar servicios.
+   - **Defensa (Ámbar):** Firewalls, VPNs, IDSs, cifrado SSL/TLS para blindar tus sistemas.
+   - **Ataque (Rojo):** DDoS, Ransomware, MITM, Port Scans para botar los servicios del rival.
+   - **Evento (Gris):** Afectan a toda la red global (Apagones, Caídas de ISP, Auditorías).
+4. **Condición de Victoria:** Mantener el 100% de tus servicios activos (`UP`) durante 3 turnos seguidos.
 
-##  Instalación
+---
+
+## 🚀 Características Premium
+
+* **Tablero 3D Interactivo:** Cartas tridimensionales animadas con físicas, rotaciones por gravedad y efectos de flotabilidad en la mesa.
+* **Consolas de Monitoreo Cyberpunk (HUD):** Monitores virtuales tácticos para oponentes que proyectan en 3D un canvas de integridad de red, servicios activos y defensas perimetrales en tiempo real.
+* **Audio Sintetizado Retro-Cyberpunk (Nativo):** Efectos de sonido generados a través de la Web Audio API (beeps de click, alarmas de caída de servicios, ruidos de barrido en ataques y arpegios de restauración) sin consumo de ancho de banda.
+* **Lobbies Online Sincronizados:** Sincronización en la nube con Supabase Realtime a través de WebSockets en milisegundos.
+
+---
+
+## 🛠️ Instalación y Configuración
 
 ```bash
-# Clonar el repositorio
+# 1. Clonar el repositorio
 git clone https://github.com/M4NUERU/Netwars.git
 cd Netwars
 
-# Instalar dependencias
+# 2. Instalar dependencias (incluyendo el SDK de Supabase)
 npm install
 
-# Servidor de desarrollo
+# 3. Configurar variables de entorno
+# Crea un archivo .env en la raíz del proyecto y añade tus claves de Supabase:
+# VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+# VITE_SUPABASE_ANON_KEY=tu-anon-key-de-supabase
+
+# 4. Iniciar servidor de desarrollo local
 npm run dev
 ```
 
-El juego se abrirá en `http://localhost:5173`.
+El juego se abrirá en `http://localhost:5173`. Para jugarlo en tu red local con otros dispositivos, expón el host ejecutando: `npm run dev -- --host` y accede mediante la IP local de tu PC.
 
-##  Stack tecnológico
+---
 
-| Tecnología | Uso |
+## ⚡ Stack Tecnológico
+
+| Tecnología | Propósito |
 |---|---|
-| [React 19](https://react.dev) | UI y lógica de componentes |
-| [Three.js](https://threejs.org) + [React Three Fiber](https://r3f.docs.pmnd.rs) | Renderizado 3D de cartas y escena |
-| [React Spring](https://www.react-spring.dev) | Animaciones fluidas |
-| [Vite](https://vite.dev) | Build tool y dev server |
+| [React 19](https://react.dev) | UI y gestión de estado reactiva |
+| [Three.js](https://threejs.org) + [React Three Fiber](https://r3f.docs.pmnd.rs) | Renderizado y simulación 3D de la mesa de red |
+| [Supabase](https://supabase.com) | Base de datos PostgreSQL y sincronización en tiempo real vía WebSockets |
+| [React Spring](https://www.react-spring.dev) | Animaciones de físicas tridimensionales fluidas |
+| [Vite](https://vite.dev) | Compilación ultrarrápida y Hot Module Replacement (HMR) |
 
-##  Estructura del proyecto
+---
+
+## 📂 Estructura del Proyecto
 
 ```
 src/
-├── main.jsx                  # Entry point
-├── NetWars.jsx               # Componente raíz (router de pantallas)
+├── main.jsx                  # Punto de entrada de la aplicación
+├── NetWars.jsx               # Enrutador de pantallas y estado base
 ├── components/
-│   ├── screens/              # MenuScreen, SetupScreen, GameOverScreen
-│   ├── game/                 # RightPanel (mano, log, controles)
-│   ├── game3d/               # GameScene3D, Hand3D, cartas en 3D
-│   └── ui/                   # Toast, TooltipDock, AttackModal, NetworkBackground
+│   ├── screens/              # MenuScreen (Lobbies), SetupScreen, GameOverScreen
+│   ├── game/                 # Componentes 2D laterales (mano, logs)
+│   ├── game3d/               # GameScene3D, Board3D, PlayerZone3D, MonitorScreenUI
+│   └── ui/                   # AttackModal, Toast, RulesModal, TooltipDock
 ├── logic/
-│   └── gameEngine.js         # Motor de juego puro (sin side effects)
+│   ├── gameEngine.js         # Motor lógico de juego (funcional puro)
+│   ├── audio.js              # Sintetizador nativo de efectos de sonido
+│   └── supabaseClient.js     # Cliente de comunicación con Supabase
 ├── constants/
-│   └── gameConstants.js      # Servicios, colores, configuración
+│   └── gameConstants.js      # Servicios, colores, constantes de balance
 ├── data/
-│   └── cardDefinitions.js    # Deck de cartas con efectos
+│   └── cardDefinitions.js    # Deck de cartas y efectos
 ├── hooks/
-│   └── useGameState.js       # Estado global del juego
+│   └── useGameState.js       # Estado global y sincronización con Supabase Realtime
 └── styles/
-    ├── global.css            # Variables, reset, layout
-    └── panel.css             # Estilos del panel lateral
+    ├── global.css            # Estilos base y variables CSS
+    └── game.css              # Estilos visuales del tablero y paneles
 ```
 
-##  Scripts disponibles
+---
 
-| Comando | Descripción |
-|---|---|
-| `npm run dev` | Servidor de desarrollo con HMR |
-| `npm run build` | Build de producción |
-| `npm run preview` | Preview del build |
-| `npm run lint` | Análisis estático con ESLint |
-
-##  Licencia
+## 📜 Licencia
 
 MIT — [M4NUERU](https://github.com/M4NUERU)

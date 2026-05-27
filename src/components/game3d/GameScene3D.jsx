@@ -6,9 +6,9 @@ import Board3D from './Board3D';
 import Hand3D from './Hand3D';
 
 const ZOOM_TARGETS = {
-    left: { pos: [-7, 6, 0], look: [-14, 3.5, -8] },
-    top: { pos: [0, 6, -2], look: [0, 3.5, -12] },
-    right: { pos: [7, 6, 0], look: [14, 3.5, -8] }
+    left: { pos: [-10.17, 4.0, 3.238], look: [-14.76, 4.0, -7.84] },
+    top: { pos: [0, 4.0, 0.0], look: [0, 4.0, -12.0] },
+    right: { pos: [10.17, 4.0, 3.238], look: [14.76, 4.0, -7.84] }
 };
 
 function CameraRig({ slot }) {
@@ -16,11 +16,26 @@ function CameraRig({ slot }) {
 
     useFrame((state) => {
         let destPos, destLook;
+        
+        // Calculate aspect ratio dynamic camera zoom out for narrow (portrait) viewports
+        const aspect = state.size.width / state.size.height;
+        const zoomFactor = aspect < 1.05 ? 1 + (1.05 - aspect) * 0.95 : 1.0;
+
         if (slot && ZOOM_TARGETS[slot]) {
-            destPos = ZOOM_TARGETS[slot].pos;
+            // Keep height locked at 4.0 for exact vertical alignment; push Z back on mobile to fit the screen
+            destPos = [
+                ZOOM_TARGETS[slot].pos[0],
+                ZOOM_TARGETS[slot].pos[1],
+                ZOOM_TARGETS[slot].pos[2] * (aspect < 1 ? 1.35 : 1)
+            ];
             destLook = ZOOM_TARGETS[slot].look;
         } else {
-            destPos = [state.mouse.x * 2.5, 20 + state.mouse.y * 2.5, 38];
+            // Regular overhead board view: scale height (Y) and depth (Z) safely
+            destPos = [
+                state.mouse.x * 2.5,
+                20 * zoomFactor,
+                38 * zoomFactor
+            ];
             destLook = [0, 0, 0];
         }
 

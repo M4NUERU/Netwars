@@ -292,3 +292,48 @@
     letter-spacing: 2px;
     color: var(--col-text-muted);
 }
+
+/* ── RESPONSIVE MOBILE MEDIA QUERIES FOR GAME UI ── */
+@media (max-width: 768px) {
+    .game-header {
+        height: 44px !important;
+        padding: 0 10px !important;
+    }
+
+    .header-logo {
+        font-size: 13px !important;
+        letter-spacing: 1px !important;
+    }
+
+    .header-logo span {
+        font-size: 10px !important;
+        margin-left: 4px !important;
+    }
+
+    .header-info {
+        font-size: 9px !important;
+    }
+
+    .header-info strong {
+        font-size: 10px !important;
+    }
+
+    .header-actions {
+        gap: 6px !important;
+    }
+
+    .header-actions button {
+        padding: 2px 4px !important;
+        font-size: 9px !important;
+        margin-right: 6px !important;
+    }
+
+    .header-actions .header-info {
+        display: none; /* Hide 'ACCIONES' text to save space */
+    }
+
+    .action-pip {
+        width: 8px !important;
+        height: 8px !important;
+    }
+}

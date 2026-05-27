@@ -174,3 +174,52 @@
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     transform: translateY(-2px);
 }
+
+/* ── RESPONSIVE MOBILE MEDIA QUERIES ── */
+@media (max-width: 768px) {
+    .menu-wrap {
+        padding: 20px !important;
+        width: 100vw !important;
+        max-width: 100% !important;
+        gap: 20px;
+    }
+
+    .menu-title {
+        font-size: 38px !important;
+        letter-spacing: -1px;
+    }
+
+    .menu-sub {
+        font-size: 13px !important;
+        letter-spacing: 2px;
+    }
+
+    .menu-desc {
+        font-size: 13px !important;
+        padding: 0 10px;
+        line-height: 1.5;
+        margin-bottom: 12px !important;
+    }
+
+    .btn-primary {
+        padding: 12px 28px !important;
+        font-size: 14px !important;
+    }
+
+    .setup-box {
+        width: 90vw !important;
+        max-width: 380px !important;
+        padding: 20px !important;
+        gap: 16px;
+    }
+
+    .count-btn {
+        height: 48px !important;
+        font-size: 16px !important;
+    }
+
+    .name-input {
+        padding: 10px 12px !important;
+        font-size: 13px !important;
+    }
+}

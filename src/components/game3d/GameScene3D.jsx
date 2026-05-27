@@ -78,7 +78,6 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                         color="#06b6d4" 
                         maxWidth={30} 
                         textAlign="center" 
-                        font="monospace" 
                         fillOpacity={0.12}
                     >
                         {`01001001 01001110 01010100 01010010 01010101 01010011 01001001 01001111 01001110\nNETWARS.SYS // TERMINAL_ACTIVE // ENCRYPTING_VPN_NODE... // KEY_PASSED\n[########################################] 100% SECURE\nPORT_80: LISTEN // PORT_443: SECURE // PORT_22: ACTIVE_ESTABLISHED`}

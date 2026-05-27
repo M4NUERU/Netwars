@@ -4,7 +4,7 @@ import { Text, Float } from '@react-three/drei';
 import PlayerZone3D from './PlayerZone3D';
 import MonitorScreenUI from './MonitorScreenUI';
 
-export default function Board3D({ game }) {
+export default function Board3D({ game, zoomedPlayerId, onMonitorClick }) {
     // Generate a gorgeous procedural wood texture for the desk
     const woodTexture = useMemo(() => {
         const canvas = document.createElement('canvas');
@@ -151,7 +151,21 @@ export default function Board3D({ game }) {
                                 </mesh>
 
                                 {/* Flat Monitor Chassis */}
-                                <group position={[0, 0, 0]}>
+                                <group 
+                                    position={[0, 0, 0]}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onMonitorClick(p.id);
+                                    }}
+                                    onPointerOver={(e) => {
+                                        e.stopPropagation();
+                                        document.body.style.cursor = 'pointer';
+                                    }}
+                                    onPointerOut={(e) => {
+                                        e.stopPropagation();
+                                        document.body.style.cursor = 'auto';
+                                    }}
+                                >
                                     {/* The Monitor Shell */}
                                     <mesh position={[0, 0, -0.25]} castShadow receiveShadow>
                                         <boxGeometry args={[17, 9, 0.5]} />

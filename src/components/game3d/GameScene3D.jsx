@@ -1,19 +1,57 @@
+import { useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Html, Text } from '@react-three/drei';
 import * as THREE from 'three';
 import Board3D from './Board3D';
 import Hand3D from './Hand3D';
 
-function CameraRig() {
+const ZOOM_TARGETS = {
+    left: { pos: [-8, 6, -2], look: [-14, 3.5, -8] },
+    top: { pos: [0, 5, -4], look: [0, 3.5, -12] },
+    right: { pos: [8, 6, -2], look: [14, 3.5, -8] }
+};
+
+function CameraRig({ slot }) {
+    const lookTarget = useRef(new THREE.Vector3(0, 0, 0));
+
     useFrame((state) => {
-        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 0.15, 20 + state.mouse.y * 0.15, 38), 0.05);
-        state.camera.lookAt(0, 0, 0);
+        let destPos, destLook;
+        if (slot && ZOOM_TARGETS[slot]) {
+            destPos = ZOOM_TARGETS[slot].pos;
+            destLook = ZOOM_TARGETS[slot].look;
+        } else {
+            destPos = [state.mouse.x * 2.5, 20 + state.mouse.y * 2.5, 38];
+            destLook = [0, 0, 0];
+        }
+
+        state.camera.position.lerp(new THREE.Vector3(destPos[0], destPos[1], destPos[2]), 0.05);
+        lookTarget.current.lerp(new THREE.Vector3(destLook[0], destLook[1], destLook[2]), 0.05);
+        state.camera.lookAt(lookTarget.current);
     });
     return null;
 }
 
 export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCard, onHoverEnd, onEndTurn, onReboot, log }) {
+    const [zoomedPlayerId, setZoomedPlayerId] = useState(null);
+
     if (!game) return null;
+
+    let slot = null;
+    if (zoomedPlayerId !== null) {
+        const i = game.players.findIndex(p => p.id === zoomedPlayerId);
+        if (game.players.length === 2) {
+            slot = 'top';
+        } else if (game.players.length === 3) {
+            const mappedIdx = (i - game.currentIdx + 3) % 3;
+            if (mappedIdx === 1) slot = 'left';
+            else if (mappedIdx === 2) slot = 'right';
+        } else {
+            const mappedIdx = (i - game.currentIdx + 4) % 4;
+            if (mappedIdx === 1) slot = 'left';
+            else if (mappedIdx === 2) slot = 'top';
+            else if (mappedIdx === 3) slot = 'right';
+        }
+    }
 
     return (
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
@@ -48,7 +86,7 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                 
                 <Environment preset="city" />
 
-                <CameraRig />
+                <CameraRig slot={slot} />
 
                 {/* --- Hacker's Cyber Room Background Scene --- */}
                 <group position={[0, -2, -26]}>
@@ -84,7 +122,11 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                     </Text>
                 </group>
 
-                <Board3D game={game} />
+                <Board3D 
+                    game={game} 
+                    zoomedPlayerId={zoomedPlayerId}
+                    onMonitorClick={(id) => setZoomedPlayerId(prev => prev === id ? null : id)}
+                />
                 
                 <Hand3D 
                     hand={currentPlayer.hand}
@@ -92,6 +134,32 @@ export default function GameScene3D({ game, currentPlayer, onPlayCard, onHoverCa
                     onHoverCard={onHoverCard}
                     onHoverEnd={onHoverEnd}
                 />
+
+                {/* Reset Zoom Button UI overlay */}
+                {zoomedPlayerId !== null && (
+                    <Html position={[0, 8, 4]} transform={false}>
+                        <div style={{
+                            background: 'rgba(15, 23, 42, 0.85)',
+                            backdropFilter: 'blur(12px)',
+                            border: '1px solid #ff0055',
+                            boxShadow: '0 0 15px rgba(255, 0, 85, 0.25)',
+                            color: '#ffffff',
+                            padding: '8px 16px',
+                            borderRadius: 4,
+                            fontFamily: 'monospace',
+                            fontSize: 12,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            animation: 'subtlePulse 2s infinite',
+                            userSelect: 'none',
+                            transform: 'translateX(-50%)'
+                        }} onClick={() => setZoomedPlayerId(null)}>
+                            🔍 RESTABLECER VISTA [ ESC ]
+                        </div>
+                    </Html>
+                )}
 
                 {/* 3D Terminal Log */}
                 <Html position={[20, 8, 5]} transform rotation={[0, -0.4, 0]}>
